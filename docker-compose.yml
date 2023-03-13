@@ -1,0 +1,79 @@
+version: '3.7'
+
+services:
+    iquraschool:
+        image: ${DOCKER_REGISTRY-}iquraschool
+        ports:
+            - 5003:5003
+        build:
+            context: IquraSchool
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/src
+            #- /app/temp
+            #- ./server/:/app
+            #- ./server/TelegramMessages/:/app
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://+:5003
+            - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
+        networks:
+            - nginx-networks
+
+    postgres:
+        container_name: postgres_iqura_container
+        image: postgres:13
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+        ports:
+            - 5432:5432
+        volumes:
+            - type: volume
+              source: postgresvolume
+              target: /var/lib/postgresql/data
+        networks:
+            - nginx-networks
+    pgadmin:
+        user: root
+        container_name: pgadmin_iqura_container
+        image: dpage/pgadmin4:5.7
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: root
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+            PGADMIN_LISTEN_PORT: 5050
+        volumes:
+            - ./pgadmin:/var/lib/pgadmin
+        ports:
+            - "5050:5050"
+        restart: unless-stopped
+        depends_on:
+            - postgres
+        networks:
+            - nginx-networks
+
+    nginx:
+        build:
+            context: ./nginx
+            dockerfile: Nginx.Dockerfile
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - iquraschool
+            - pgadmin
+            - postgres
+        restart: always
+        networks:
+            - nginx-networks
+
+networks:
+    nginx-networks:
+        driver: bridge
+
+volumes:
+    postgresvolume:
+        driver: "local"

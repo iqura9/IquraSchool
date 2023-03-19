@@ -25,7 +25,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.Course", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("integer");
@@ -45,7 +48,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.Grade", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<byte>("Absent")
                         .HasColumnType("smallint");
@@ -75,7 +81,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.Group", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("HeadTeacherId")
                         .HasColumnType("integer");
@@ -96,7 +105,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.ScheduleInfo", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CourseId")
                         .HasColumnType("integer");
@@ -125,7 +137,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.Student", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -153,7 +168,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.Subject", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -171,7 +189,10 @@ namespace IquraSchool.Migrations
             modelBuilder.Entity("IquraSchool.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()

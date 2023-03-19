@@ -32,6 +32,7 @@ public partial class DbiquraSchoolContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseNpgsql("Host=postgres_iqura_container;Port=5432;Database=DBIquraSchool;Username=root;Password=root;Pooling=true;Include Error Detail=true;");
+        //=> optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=DBIquraSchool;Username=root;Password=root;Pooling=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,7 +40,7 @@ public partial class DbiquraSchoolContext : DbContext
         {
             entity.ToTable("Course");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Subject).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.SubjectId)
@@ -56,7 +57,7 @@ public partial class DbiquraSchoolContext : DbContext
         {
             entity.ToTable("Grade");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Date).HasColumnType("timestamp");
             entity.Property(e => e.Grade1).HasColumnName("Grade");
 
@@ -77,7 +78,7 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasIndex(e => e.HeadTeacherId, "IX_Group").IsUnique();
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).HasMaxLength(4);
 
             entity.HasOne(d => d.HeadTeacher).WithOne(p => p.Group)
@@ -90,7 +91,7 @@ public partial class DbiquraSchoolContext : DbContext
         {
             entity.ToTable("Schedule_Info");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Course).WithMany(p => p.ScheduleInfos)
                 .HasForeignKey(d => d.CourseId)
@@ -107,7 +108,7 @@ public partial class DbiquraSchoolContext : DbContext
         {
             entity.ToTable("Student");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(100);
 
@@ -121,7 +122,7 @@ public partial class DbiquraSchoolContext : DbContext
         {
             entity.ToTable("Subject");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
@@ -129,7 +130,7 @@ public partial class DbiquraSchoolContext : DbContext
         {
             entity.ToTable("Teacher");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            //entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(100);
         });

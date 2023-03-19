@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IquraSchool.Migrations
 {
     [DbContext(typeof(DbiquraSchoolContext))]
-    [Migration("20230313225154_Initial")]
-    partial class Initial
+    [Migration("20230319164050_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

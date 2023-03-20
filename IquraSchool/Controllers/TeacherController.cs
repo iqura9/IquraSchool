@@ -9,87 +9,87 @@ using IquraSchool.Models;
 
 namespace IquraSchool.Controllers
 {
-    public class SubjectController : Controller
+    public class TeacherController : Controller
     {
         private readonly DbiquraSchoolContext _context;
 
-        public SubjectController(DbiquraSchoolContext context)
+        public TeacherController(DbiquraSchoolContext context)
         {
             _context = context;
         }
 
-        // GET: Subject
+        // GET: Teacher
         public async Task<IActionResult> Index()
         {
-              return _context.Subjects != null ? 
-                          View(await _context.Subjects.ToListAsync()) :
-                          Problem("Entity set 'DbiquraSchoolContext.Subjects'  is null.");
+              return _context.Teachers != null ? 
+                          View(await _context.Teachers.ToListAsync()) :
+                          Problem("Entity set 'DbiquraSchoolContext.Teachers'  is null.");
         }
 
-        // GET: Subject/Details/5
+        // GET: Teacher/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Teachers == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects
+            var teacher = await _context.Teachers
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
+            if (teacher == null)
             {
                 return NotFound();
             }
 
-            return View(subject);
+            return View(teacher);
         }
 
-        // GET: Subject/Create
+        // GET: Teacher/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Subject/Create
+        // POST: Teacher/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Subject subject)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Image")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(subject);
+                _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(subject);
+            return View(teacher);
         }
 
-        // GET: Subject/Edit/5
+        // GET: Teacher/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Teachers == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject == null)
+            var teacher = await _context.Teachers.FindAsync(id);
+            if (teacher == null)
             {
                 return NotFound();
             }
-            return View(subject);
+            return View(teacher);
         }
 
-        // POST: Subject/Edit/5
+        // POST: Teacher/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Subject subject)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Image")] Teacher teacher)
         {
-            if (id != subject.Id)
+            if (id != teacher.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace IquraSchool.Controllers
             {
                 try
                 {
-                    _context.Update(subject);
+                    _context.Update(teacher);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SubjectExists(subject.Id))
+                    if (!TeacherExists(teacher.Id))
                     {
                         return NotFound();
                     }
@@ -114,49 +114,49 @@ namespace IquraSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(subject);
+            return View(teacher);
         }
 
-        // GET: Subject/Delete/5
+        // GET: Teacher/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Teachers == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects
+            var teacher = await _context.Teachers
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
+            if (teacher == null)
             {
                 return NotFound();
             }
 
-            return View(subject);
+            return View(teacher);
         }
 
-        // POST: Subject/Delete/5
+        // POST: Teacher/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Subjects == null)
+            if (_context.Teachers == null)
             {
-                return Problem("Entity set 'DbiquraSchoolContext.Subjects'  is null.");
+                return Problem("Entity set 'DbiquraSchoolContext.Teachers'  is null.");
             }
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject != null)
+            var teacher = await _context.Teachers.FindAsync(id);
+            if (teacher != null)
             {
-                _context.Subjects.Remove(subject);
+                _context.Teachers.Remove(teacher);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubjectExists(int id)
+        private bool TeacherExists(int id)
         {
-          return (_context.Subjects?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Teachers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

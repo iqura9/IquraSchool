@@ -9,87 +9,90 @@ using IquraSchool.Models;
 
 namespace IquraSchool.Controllers
 {
-    public class SubjectController : Controller
+    public class StudentController : Controller
     {
         private readonly DbiquraSchoolContext _context;
 
-        public SubjectController(DbiquraSchoolContext context)
+        public StudentController(DbiquraSchoolContext context)
         {
             _context = context;
         }
 
-        // GET: Subject
+        // GET: Student
         public async Task<IActionResult> Index()
         {
-              return _context.Subjects != null ? 
-                          View(await _context.Subjects.ToListAsync()) :
-                          Problem("Entity set 'DbiquraSchoolContext.Subjects'  is null.");
+            var dbiquraSchoolContext = _context.Students.Include(s => s.Group);
+            return View(await dbiquraSchoolContext.ToListAsync());
         }
 
-        // GET: Subject/Details/5
+        // GET: Student/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects
+            var student = await _context.Students
+                .Include(s => s.Group)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(subject);
+            return View(student);
         }
 
-        // GET: Subject/Create
+        // GET: Student/Create
         public IActionResult Create()
         {
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id");
             return View();
         }
 
-        // POST: Subject/Create
+        // POST: Student/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Subject subject)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Image,GroupId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(subject);
+                _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(subject);
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id", student.GroupId);
+            return View(student);
         }
 
-        // GET: Subject/Edit/5
+        // GET: Student/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject == null)
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
             {
                 return NotFound();
             }
-            return View(subject);
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id", student.GroupId);
+            return View(student);
         }
 
-        // POST: Subject/Edit/5
+        // POST: Student/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Subject subject)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Image,GroupId")] Student student)
         {
-            if (id != subject.Id)
+            if (id != student.Id)
             {
                 return NotFound();
             }
@@ -98,12 +101,12 @@ namespace IquraSchool.Controllers
             {
                 try
                 {
-                    _context.Update(subject);
+                    _context.Update(student);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SubjectExists(subject.Id))
+                    if (!StudentExists(student.Id))
                     {
                         return NotFound();
                     }
@@ -114,49 +117,51 @@ namespace IquraSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(subject);
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id", student.GroupId);
+            return View(student);
         }
 
-        // GET: Subject/Delete/5
+        // GET: Student/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects
+            var student = await _context.Students
+                .Include(s => s.Group)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(subject);
+            return View(student);
         }
 
-        // POST: Subject/Delete/5
+        // POST: Student/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Subjects == null)
+            if (_context.Students == null)
             {
-                return Problem("Entity set 'DbiquraSchoolContext.Subjects'  is null.");
+                return Problem("Entity set 'DbiquraSchoolContext.Students'  is null.");
             }
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject != null)
+            var student = await _context.Students.FindAsync(id);
+            if (student != null)
             {
-                _context.Subjects.Remove(subject);
+                _context.Students.Remove(student);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubjectExists(int id)
+        private bool StudentExists(int id)
         {
-          return (_context.Subjects?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -41,7 +41,8 @@ namespace IquraSchool.Controllers
                 return NotFound();
             }
 
-            return View(subject);
+            //return View(subject);
+            return RedirectToAction("Index", "Course", new { id = subject.Id, name = subject.Name });
         }
 
         // GET: Subject/Create

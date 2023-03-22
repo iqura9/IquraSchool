@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Деталі</h1>
 
 <div>
-    <h4>Teacher</h4>
+    <h4>Вчитель</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -27,11 +27,11 @@
             @Html.DisplayNameFor(model => model.Image)
         </dt>
         <dd class = "col-sm-10">
-            <img src="@Html.DisplayFor(model => model.Image)" width="48px" alt="avatar"/>
+            <img src="@Html.DisplayFor(model => model.Image)" width="100px" alt="avatar"/>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
+    <a asp-action="Index">Назад до списку</a>
 </div>

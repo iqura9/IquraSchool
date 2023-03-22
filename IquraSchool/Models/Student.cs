@@ -7,16 +7,16 @@ namespace IquraSchool.Models;
 public partial class Student
 {
     public int Id { get; set; }
-    [Display(Name = "ПІБ")]
+    [Display(Name = "П.І.Б")]
     public string FullName { get; set; } = null!;
-
+    [Display(Name = "Електронна пошта")]
     public string Email { get; set; } = null!;
-
+    [Display(Name = "Фото")]
     public string? Image { get; set; }
 
     public int GroupId { get; set; }
 
     public virtual ICollection<Grade> Grades { get; } = new List<Grade>();
-
+    [Display(Name = "Клас")]
     public virtual Group Group { get; set; } = null!;
 }

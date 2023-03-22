@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IquraSchool.Models;
-
+[Display(Name = "Предмет")]
 public partial class Subject
 {
     public int Id { get; set; }

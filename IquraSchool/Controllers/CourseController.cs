@@ -19,9 +19,14 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Course
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, string? name)
         {
-            var dbiquraSchoolContext = _context.Courses.Include(c => c.Subject).Include(c => c.Teacher);
+            if (id == null)
+            {
+                var dbiquraSchoolContextAll = _context.Courses.Include(c => c.Subject).Include(c => c.Teacher);
+                return View(await dbiquraSchoolContextAll.ToListAsync());
+            }
+            var dbiquraSchoolContext = _context.Courses.Where(b => b.SubjectId== id).Include(c => c.Subject).Include(c => c.Teacher);
             return View(await dbiquraSchoolContext.ToListAsync());
         }
 
@@ -42,7 +47,8 @@ namespace IquraSchool.Controllers
                 return NotFound();
             }
 
-            return View(course);
+            //return View(course);
+            return RedirectToAction("Details", "Teacher", new { id = course.TeacherId });
         }
 
         // GET: Course/Create

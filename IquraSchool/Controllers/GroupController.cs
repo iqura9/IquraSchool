@@ -47,7 +47,7 @@ namespace IquraSchool.Controllers
         // GET: Group/Create
         public IActionResult Create()
         {
-            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "Id");
+            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "FullName");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace IquraSchool.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "Id", group.HeadTeacherId);
+            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", group.HeadTeacherId);
             return View(group);
         }
 
@@ -81,7 +81,7 @@ namespace IquraSchool.Controllers
             {
                 return NotFound();
             }
-            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "Id", group.HeadTeacherId);
+            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", group.HeadTeacherId);
             return View(group);
         }
 
@@ -117,7 +117,7 @@ namespace IquraSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "Id", group.HeadTeacherId);
+            ViewData["HeadTeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", group.HeadTeacherId);
             return View(group);
         }
 

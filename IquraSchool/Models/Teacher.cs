@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IquraSchool.Models;
-
+[Display(Name = "Вчитель")]
 public partial class Teacher
 {
     public int Id { get; set; }
@@ -11,7 +11,7 @@ public partial class Teacher
     public string FullName { get; set; } = null!;
     [Display(Name = "Електронна пошта")]
     public string Email { get; set; } = null!;
-    [Display(Name = "Посилання на фото")]
+    [Display(Name = "Фото")]
     public string? Image { get; set; }
 
     public virtual ICollection<Course> Courses { get; } = new List<Course>();

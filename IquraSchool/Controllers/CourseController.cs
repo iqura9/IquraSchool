@@ -26,6 +26,9 @@ namespace IquraSchool.Controllers
                 var dbiquraSchoolContextAll = _context.Courses.Include(c => c.Subject).Include(c => c.Teacher);
                 return View(await dbiquraSchoolContextAll.ToListAsync());
             }
+
+            ViewBag.SubjectId = id;
+            ViewBag.SubjectName = name;
             var dbiquraSchoolContext = _context.Courses.Where(b => b.SubjectId== id).Include(c => c.Subject).Include(c => c.Teacher);
             return View(await dbiquraSchoolContext.ToListAsync());
         }

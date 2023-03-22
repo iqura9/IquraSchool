@@ -1,15 +1,22 @@
 @model IEnumerable<IquraSchool.Models.Course>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Курси";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Курси</h1>
+@if (ViewBag.SubjectName != null)
+{
+    <h4>За предметом @ViewBag.SubjectName</h4>
+}
+
 
 <p>
-    <a asp-action="Create">Додати</a>
+    <a asp-action="Create">Додати новий курс</a>
+    @* @Html.ActionLink("Додати новий курс", "Create", new {SubjectIds = @ViewBag.SubjectId }) *@
 </p>
+
 <table class="table">
     <thead>
         <tr>

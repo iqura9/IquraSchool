@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace IquraSchool.Models;
 
 public partial class Group
 {
     public int Id { get; set; }
-
+    [Display(Name = "Назва")]
     public string Name { get; set; } = null!;
-
     public int HeadTeacherId { get; set; }
-
+    
     public virtual Teacher HeadTeacher { get; set; } = null!;
 
     public virtual ICollection<ScheduleInfo> ScheduleInfos { get; } = new List<ScheduleInfo>();

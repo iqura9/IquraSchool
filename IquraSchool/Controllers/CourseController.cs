@@ -48,8 +48,8 @@ namespace IquraSchool.Controllers
         // GET: Course/Create
         public IActionResult Create()
         {
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id");
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id");
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name");
+            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName");
             return View();
         }
 
@@ -66,8 +66,17 @@ namespace IquraSchool.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", course.SubjectId);
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", course.TeacherId);
+            Console.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
+            Console.WriteLine($"course.SubjectId: {course.SubjectId}");
+            Console.WriteLine($"course.TeacherId: {course.TeacherId}");
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine($"Model error: {error.ErrorMessage}");
+            }
+
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name", course.SubjectId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", course.TeacherId);
+            
             return View(course);
         }
 
@@ -84,8 +93,8 @@ namespace IquraSchool.Controllers
             {
                 return NotFound();
             }
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", course.SubjectId);
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", course.TeacherId);
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name", course.SubjectId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", course.TeacherId);
             return View(course);
         }
 
@@ -121,8 +130,8 @@ namespace IquraSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", course.SubjectId);
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", course.TeacherId);
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name", course.SubjectId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName", course.TeacherId);
             return View(course);
         }
 

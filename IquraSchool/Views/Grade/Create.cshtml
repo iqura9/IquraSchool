@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Додати</h1>
 
-<h4>Grade</h4>
+<h4>Оцінка</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,7 +33,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Absent" class="control-label"></label>
-                <input asp-for="Absent" class="form-control" />
+                <select asp-for="Absent" class="form-control">
+                    <option value="0">Присутній</option>
+                    <option value="1">Не з'явився</option>
+                    <option value="2">Поважна причина</option>
+                </select>
                 <span asp-validation-for="Absent" class="text-danger"></span>
             </div>
             <div class="form-group">

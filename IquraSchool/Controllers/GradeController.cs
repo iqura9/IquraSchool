@@ -48,8 +48,9 @@ namespace IquraSchool.Controllers
         // GET: Grade/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
-            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Id");
+            // #TODO replace 13 with real teacherId
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).Where(c => c.TeacherId == 13), "Id", "Subject.Name");
+            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View();
         }
 
@@ -66,8 +67,8 @@ namespace IquraSchool.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", grade.CourseId);
-            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Id", grade.StudentId);
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject), "Id", "Subject.Name", grade.CourseId);
+            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName", grade.StudentId);
             return View(grade);
         }
 

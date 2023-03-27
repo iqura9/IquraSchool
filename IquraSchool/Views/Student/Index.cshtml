@@ -38,7 +38,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <img src="@Html.DisplayFor(modelItem => item.Image)" alt="аватар" width="48px">
+                   @if (!string.IsNullOrEmpty(item.Image))
+                   {
+                       <img src="@Html.DisplayFor(modelItem => item.Image)" alt="аватар" width="48px">
+                   }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Group.Name)

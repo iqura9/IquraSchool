@@ -19,11 +19,36 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Grade
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? academicYear)
         {
-            var dbiquraSchoolContext = _context.Grades.Include(g => g.Course).Include(g => g.Student);
+            DateTime startDate = new DateTime(DateTime.Today.Year - 1, 9, 1);
+            DateTime endDate = new DateTime(DateTime.Today.Year + 1, 8, 31);
+
+            Console.WriteLine(academicYear);
+            var academicYears = new List<string> { "2022-2023", "2021-2022", "2020-2021" };
+            ViewBag.academicYears = new SelectList(academicYears, academicYear);
+
+            if (!string.IsNullOrEmpty(academicYear))
+            {
+                // Parse the selected academic year from the dropdown list
+                var yearParts = academicYear.Split('-');
+                int startYear = int.Parse(yearParts[0]);
+                int endYear = int.Parse(yearParts[1]);
+
+                // Set the start and end dates based on the selected academic year
+                startDate = new DateTime(startYear, 9, 1);
+                endDate = new DateTime(endYear, 8, 31);
+            }
+
+            var dbiquraSchoolContext = _context.Grades
+                .Include(g => g.Student)
+                .Include(g => g.Course.Subject)
+                .Include(g => g.Course.Teacher)
+                .Where(g => g.Date >= startDate && g.Date <= endDate);
+
             return View(await dbiquraSchoolContext.ToListAsync());
         }
+
 
         // GET: Grade/Details/5
         public async Task<IActionResult> Details(int? id)

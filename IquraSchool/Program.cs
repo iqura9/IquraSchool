@@ -1,4 +1,5 @@
 using Azure;
+using IquraSchool.Data;
 using IquraSchool.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

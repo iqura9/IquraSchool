@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
+using IquraSchool.Data;
 
 namespace IquraSchool.Controllers
 {
@@ -21,7 +22,7 @@ namespace IquraSchool.Controllers
         // GET: Grade
         public async Task<IActionResult> Index(string? academicYear)
         {
-            DateTime startDate = new DateTime(DateTime.Today.Year - 1, 9, 1);
+            DateTime startDate = new DateTime(DateTime.Today.Year - 23, 9, 1);
             DateTime endDate = new DateTime(DateTime.Today.Year + 1, 8, 31);
 
             Console.WriteLine(academicYear);

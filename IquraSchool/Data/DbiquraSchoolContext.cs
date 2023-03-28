@@ -42,7 +42,6 @@ public partial class DbiquraSchoolContext : DbContext
         modelBuilder.Entity<AcademicYear>(entity =>
         {
             entity
-                .HasNoKey()
                 .ToTable("AcademicYear");
         });
 

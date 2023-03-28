@@ -25,9 +25,7 @@ namespace IquraSchool.Controllers
             DateTime startDate = new DateTime(DateTime.Today.Year - 23, 9, 1);
             DateTime endDate = new DateTime(DateTime.Today.Year + 1, 8, 31);
 
-            Console.WriteLine(academicYear);
-            var academicYears = new List<string> { "2022-2023", "2021-2022", "2020-2021" };
-            ViewBag.academicYears = new SelectList(academicYears, academicYear);
+            ViewBag.academicYears = new SelectList(_context.AcademicYears, "BeginEndYear", "BeginEndYear", academicYear);
 
             if (!string.IsNullOrEmpty(academicYear))
             {

@@ -15,7 +15,7 @@
 @Html.DropDownList("academicYears",
     ViewBag.academicYears,
     "¬ибер≥ть р≥к",
-    new {@class = "form-control", onchange="academicYearChanged(this)"}
+    new {@class = "form-control", onchange="academicYearChanged(this)", disabled = "disabled"}
 )
 
 <table class="table">
@@ -84,11 +84,18 @@
     </tbody>
 </table>
 
-<script>
-    function academicYearChanged(select) {
-        var selectedValue = select.value;
-        if (selectedValue) {
-            window.location.href = "?academicYear=" + selectedValue;
+
+
+@section Scripts {
+    <script>
+        function academicYearChanged(select) {
+            var selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = "?academicYear=" + selectedValue;
+            }
         }
-    }
+        $(document).ready(function () {
+            $("#academicYears").removeAttr("disabled");
+        });
 </script>
+}

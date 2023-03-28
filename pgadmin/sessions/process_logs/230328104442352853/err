@@ -1,0 +1,236 @@
+230328104442706236,pg_dump: last built-in OID is 16383
+
+230328104442706325,pg_dump: reading extensions
+
+230328104442715408,pg_dump: identifying extension members
+
+230328104442721370,pg_dump: reading schemas
+
+230328104442732324,pg_dump: reading user-defined tables
+
+230328104442806330,pg_dump: reading user-defined functions
+
+230328104442839324,pg_dump: reading user-defined types
+
+230328104442864705,pg_dump: reading procedural languages
+
+230328104442875369,pg_dump: reading user-defined aggregate functions
+
+230328104442882603,pg_dump: reading user-defined operators
+
+230328104442891219,pg_dump: reading user-defined access methods
+
+230328104442901864,pg_dump: reading user-defined operator classes
+
+230328104442902701,pg_dump: reading user-defined operator families
+
+230328104442916402,pg_dump: reading user-defined text search parsers
+
+230328104442921598,pg_dump: reading user-defined text search templates
+
+230328104442924843,pg_dump: reading user-defined text search dictionaries
+
+230328104442934084,pg_dump: reading user-defined text search configurations
+
+230328104442937684,pg_dump: reading user-defined foreign-data wrappers
+
+230328104442950408,pg_dump: reading user-defined foreign servers
+
+230328104442957984,pg_dump: reading default privileges
+
+230328104442971971,pg_dump: reading user-defined collations
+
+230328104442983266,pg_dump: reading user-defined conversions
+
+230328104442989319,pg_dump: reading type casts
+
+230328104442990936,pg_dump: reading transforms
+
+230328104442991283,pg_dump: reading table inheritance information
+
+230328104442998648,pg_dump: reading event triggers
+
+230328104443001408,pg_dump: finding extension tables
+
+230328104443019799,pg_dump: finding inheritance relationships
+
+230328104443019872,pg_dump: reading column info for interesting tables
+
+230328104443019905,pg_dump: finding the columns and types of table "public.Course"
+
+230328104443020657,pg_dump: finding the columns and types of table "public.Grade"
+
+230328104443021332,pg_dump: finding the columns and types of table "public.Group"
+
+230328104443021965,pg_dump: finding the columns and types of table "public.Schedule_Info"
+
+230328104443022569,pg_dump: finding the columns and types of table "public.Student"
+
+230328104443023149,pg_dump: finding the columns and types of table "public.Subject"
+
+230328104443023701,pg_dump: finding the columns and types of table "public.Teacher"
+
+230328104443024415,pg_dump: finding the columns and types of table "public.__EFMigrationsHistory"
+
+230328104443025013,pg_dump: finding the columns and types of table "public.AcademicYear"
+
+230328104443025568,pg_dump: flagging inherited columns in subtables
+
+230328104443025628,pg_dump: reading indexes
+
+230328104443025657,pg_dump: reading indexes for table "public.Course"
+
+230328104443036033,pg_dump: reading indexes for table "public.Grade"
+
+230328104443037336,pg_dump: reading indexes for table "public.Group"
+
+230328104443038399,pg_dump: reading indexes for table "public.Schedule_Info"
+
+230328104443039491,pg_dump: reading indexes for table "public.Student"
+
+230328104443040581,pg_dump: reading indexes for table "public.Subject"
+
+230328104443042663,pg_dump: reading indexes for table "public.Teacher"
+
+230328104443043988,pg_dump: reading indexes for table "public.__EFMigrationsHistory"
+
+230328104443045161,pg_dump: flagging indexes in partitioned tables
+
+230328104443045235,pg_dump: reading extended statistics
+
+230328104443048903,pg_dump: reading constraints
+
+230328104443048977,pg_dump: reading foreign key constraints for table "public.Course"
+
+230328104443049284,pg_dump: reading foreign key constraints for table "public.Grade"
+
+230328104443049572,pg_dump: reading foreign key constraints for table "public.Group"
+
+230328104443049864,pg_dump: reading foreign key constraints for table "public.Schedule_Info"
+
+230328104443050169,pg_dump: reading foreign key constraints for table "public.Student"
+
+230328104443050437,pg_dump: reading foreign key constraints for table "public.Subject"
+
+230328104443050678,pg_dump: reading foreign key constraints for table "public.Teacher"
+
+230328104443050909,pg_dump: reading triggers
+
+230328104443051270,pg_dump: reading triggers for table "public.Course"
+
+230328104443053149,pg_dump: reading triggers for table "public.Grade"
+
+230328104443053559,pg_dump: reading triggers for table "public.Group"
+
+230328104443057977,pg_dump: reading triggers for table "public.Schedule_Info"
+
+230328104443058354,pg_dump: reading triggers for table "public.Student"
+
+230328104443058731,pg_dump: reading triggers for table "public.Subject"
+
+230328104443059020,pg_dump: reading triggers for table "public.Teacher"
+
+230328104443059375,pg_dump: reading rewrite rules
+
+230328104443063521,pg_dump: reading policies
+
+230328104443063589,pg_dump: reading row security enabled for table "public.Course"
+
+230328104443063620,pg_dump: reading policies for table "public.Course"
+
+230328104443076140,pg_dump: reading row security enabled for table "public.Course_Id_seq"
+
+230328104443076225,pg_dump: reading policies for table "public.Course_Id_seq"
+
+230328104443076837,pg_dump: reading row security enabled for table "public.Grade"
+
+230328104443076949,pg_dump: reading policies for table "public.Grade"
+
+230328104443077408,pg_dump: reading row security enabled for table "public.Grade_Id_seq"
+
+230328104443077474,pg_dump: reading policies for table "public.Grade_Id_seq"
+
+230328104443078004,pg_dump: reading row security enabled for table "public.Group"
+
+230328104443078063,pg_dump: reading policies for table "public.Group"
+
+230328104443078689,pg_dump: reading row security enabled for table "public.Group_Id_seq"
+
+230328104443078781,pg_dump: reading policies for table "public.Group_Id_seq"
+
+230328104443079113,pg_dump: reading row security enabled for table "public.Schedule_Info"
+
+230328104443079174,pg_dump: reading policies for table "public.Schedule_Info"
+
+230328104443079576,pg_dump: reading row security enabled for table "public.Schedule_Info_Id_seq"
+
+230328104443079639,pg_dump: reading policies for table "public.Schedule_Info_Id_seq"
+
+230328104443079962,pg_dump: reading row security enabled for table "public.Student"
+
+230328104443080017,pg_dump: reading policies for table "public.Student"
+
+230328104443080300,pg_dump: reading row security enabled for table "public.Student_Id_seq"
+
+230328104443080367,pg_dump: reading policies for table "public.Student_Id_seq"
+
+230328104443080616,pg_dump: reading row security enabled for table "public.Subject"
+
+230328104443080663,pg_dump: reading policies for table "public.Subject"
+
+230328104443080954,pg_dump: reading row security enabled for table "public.Subject_Id_seq"
+
+230328104443080999,pg_dump: reading policies for table "public.Subject_Id_seq"
+
+230328104443081234,pg_dump: reading row security enabled for table "public.Teacher"
+
+230328104443081274,pg_dump: reading policies for table "public.Teacher"
+
+230328104443081537,pg_dump: reading row security enabled for table "public.Teacher_Id_seq"
+
+230328104443081588,pg_dump: reading policies for table "public.Teacher_Id_seq"
+
+230328104443081916,pg_dump: reading row security enabled for table "public.__EFMigrationsHistory"
+
+230328104443081952,pg_dump: reading policies for table "public.__EFMigrationsHistory"
+
+230328104443082272,pg_dump: reading row security enabled for table "public.AcademicYear"
+
+230328104443082305,pg_dump: reading policies for table "public.AcademicYear"
+
+230328104443082604,pg_dump: reading publications
+
+230328104443089685,pg_dump: reading publication membership
+
+230328104443099973,pg_dump: reading subscriptions
+
+230328104443104404,pg_dump: reading large objects
+
+230328104443105913,pg_dump: reading dependency data
+
+230328104443120087,pg_dump: saving encoding = UTF8
+
+230328104443120142,pg_dump: saving standard_conforming_strings = on
+
+230328104443120358,pg_dump: saving search_path = 
+
+230328104443120394,pg_dump: saving database definition
+
+230328104443170326,pg_dump: dumping contents of table "public.AcademicYear"
+
+230328104443170688,pg_dump: dumping contents of table "public.Course"
+
+230328104443171655,pg_dump: dumping contents of table "public.Grade"
+
+230328104443172473,pg_dump: dumping contents of table "public.Group"
+
+230328104443173128,pg_dump: dumping contents of table "public.Schedule_Info"
+
+230328104443173405,pg_dump: dumping contents of table "public.Student"
+
+230328104443174401,pg_dump: dumping contents of table "public.Subject"
+
+230328104443175363,pg_dump: dumping contents of table "public.Teacher"
+
+230328104443177413,pg_dump: dumping contents of table "public.__EFMigrationsHistory"
+

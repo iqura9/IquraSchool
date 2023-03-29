@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using DocumentFormat.OpenXml.Wordprocessing;
+using IquraSchool.Migrations;
 
 namespace IquraSchool.Controllers
 {
@@ -20,10 +23,16 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Grade
-        public async Task<IActionResult> Index(string? academicYear)
+        public async Task<IActionResult> Index(int? id, string? academicYear)
         {
+            //Progress by userId
+            if (id != null) return RedirectToAction("Progress","Grade", new { id = id });
+
+
+            //Grade
             DateTime startDate = new DateTime(DateTime.Today.Year - 23, 9, 1);
             DateTime endDate = new DateTime(DateTime.Today.Year + 1, 8, 31);
+            
             ViewBag.academicYears = new SelectList(_context.AcademicYears, "BeginEndYear", "BeginEndYear", academicYear);
 
             if (!string.IsNullOrEmpty(academicYear))
@@ -189,6 +198,53 @@ namespace IquraSchool.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        // GET: Grade/Progress/5
+        public async Task<IActionResult> Progress(int? id, int? month, string? academicYear)
+        {
+            if (id == null)
+            {
+                return BadRequest("Student ID is required.");
+            }
+
+            DateTime startDate = new DateTime(DateTime.Today.Year - 23, 9, 1);
+            DateTime endDate = new DateTime(DateTime.Today.Year + 1, 8, 31);
+
+            ViewBag.academicYears = new SelectList(_context.AcademicYears, "BeginEndYear", "BeginEndYear", academicYear);
+
+            if (!string.IsNullOrEmpty(academicYear))
+            {
+                // Parse the selected academic year from the dropdown list
+                var yearParts = academicYear.Split('-');
+                int startYear = int.Parse(yearParts[0]);
+                int endYear = int.Parse(yearParts[1]);
+
+                // Set the start and end dates based on the selected academic year
+                startDate = new DateTime(startYear, 9, 1);
+                endDate = new DateTime(endYear, 8, 31);
+            }
+
+            var grades = await _context.Grades
+                .Include(g => g.Student)
+                .Include(g => g.Course.Subject)
+                .Include(g => g.Course.Teacher)
+                .Where(g => g.Student.Id == id && (month == null || g.Date.Month == month))
+                .Where(g => g.Date >= startDate && g.Date <= endDate)
+                .ToListAsync();
+
+
+            List<string> months = new List<string>();
+            DateTime date = new DateTime(DateTime.Now.Year, 9, 1); // September 1st of the current year
+            for (int i = 0; i < 12; i++)
+            {
+                months.Add(date.AddMonths(i).ToString("MMMM"));
+            }
+
+            ViewBag.Months = new SelectList(months.Select((m, i) => new { Value = (i + 9) % 12 != 0 ? (i + 9) % 12 : 12, Text = m }), "Value", "Text", month);
+
+
+            return View("Progress", grades);
+        }
         private bool GradeExists(int id)
         {
           return (_context.Grades?.Any(e => e.Id == id)).GetValueOrDefault();

@@ -72,4 +72,11 @@ button.accept-policy {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
-} 
+}
+
+.container:has(#progress) {
+    max-width: 100%;
+}
+.hidetable{
+    display:none;
+}

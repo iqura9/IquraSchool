@@ -10,6 +10,21 @@
 <p>
     <a asp-action="Create">Додати</a>
 </p>
+
+<div>
+    <h3>Оберіть excel-файл для заватаження</h3>
+    @using (Html.BeginForm("Import", "Student", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+    {
+        <div>
+            Завантажте Excel-файл:
+            <input type="file" name="fileExcel" id="fileExcel" />
+            <div>
+                <input type="submit" value="Завантажити" />
+            </div>
+        </div>
+    }
+</div>
+
 <table class="table">
     <thead>
         <tr>

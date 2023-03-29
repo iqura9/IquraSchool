@@ -10,9 +10,9 @@ public partial class Group
     [Display(Name = "Назва")]
     public string Name { get; set; } = null!;
     [Display(Name = "Класний керівник")]
-    public int HeadTeacherId { get; set; }
+    public int? HeadTeacherId { get; set; }
     [Display(Name = "Класний керівник")]
-    public virtual Teacher HeadTeacher { get; set; } = null!;
+    public virtual Teacher HeadTeacher { get; set; } = null;
 
     public virtual ICollection<ScheduleInfo> ScheduleInfos { get; } = new List<ScheduleInfo>();
     

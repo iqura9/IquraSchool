@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
+using ClosedXML.Excel;
 
 namespace IquraSchool.Controllers
 {
@@ -157,6 +158,61 @@ namespace IquraSchool.Controllers
             }
             
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Import(IFormFile fileExcel)
+        {
+            if (ModelState.IsValid)
+            {
+                if(fileExcel == null)
+                {
+                    return BadRequest("Файл не повинний бути пустим");
+                }
+                using(var stream = new FileStream(fileExcel.FileName, FileMode.Create))
+                {
+                    await fileExcel.CopyToAsync(stream);
+                    using(XLWorkbook workBook = new XLWorkbook(stream, XLEventTracking.Disabled))
+                    {
+                        //перегляд усіх листів (класи)
+                        foreach(IXLWorksheet worksheet in workBook.Worksheets)
+                        {
+                            Group newGroup;
+                            var c = (from g in _context.Groups
+                                     where g.Name.Contains(worksheet.Name)
+                                     select g).ToList();
+                            if(c.Count > 0)
+                            {
+                                newGroup = c[0];
+                            }
+                            else
+                            {
+                                newGroup = new Group();
+                                newGroup.Name = worksheet.Name;
+                                _context.Groups.Add(newGroup);
+                            }
+                            foreach (IXLRow row in worksheet.RowsUsed().Skip(1))
+                            {
+                                try
+                                {
+                                    Student student = new Student();
+                                    student.FullName = row.Cell(1).Value.ToString();
+                                    student.Email = row.Cell(2).Value.ToString();
+                                    student.Image = row.Cell(3).Value.ToString();
+                                    student.Group = newGroup;
+                                    _context.Students.Add(student);
+                                }
+                                catch(Exception e) { 
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 

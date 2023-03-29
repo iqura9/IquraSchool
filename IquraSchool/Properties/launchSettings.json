@@ -32,6 +32,28 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "Debug": {
+      "commandName": "Project",
+      //"launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "useSSL": false,
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://::5000"
+    },
+    "Watch_App": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "watch run --project IquraSchool.csproj",
+      "workingDirectory": "$(ProjectDir)",
+      "useSSL": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://::5000"
     }
   },
   "iisSettings": {

@@ -21,9 +21,11 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Student
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, string? name)
         {
-            var dbiquraSchoolContext = _context.Students.Include(s => s.Group);
+            ViewBag.GroupId = id;
+            ViewBag.GroupName = name;
+            var dbiquraSchoolContext = _context.Students.Include(s => s.Group).Where(s => s.Group.Id == id);
             return View(await dbiquraSchoolContext.ToListAsync());
         }
 

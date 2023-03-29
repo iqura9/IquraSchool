@@ -42,7 +42,8 @@ namespace IquraSchool.Controllers
                 return NotFound();
             }
 
-            return View(group);
+            //return View(group);
+            return RedirectToAction("Index", "Student", new { id = group.Id, name = group.Name });
         }
 
         // GET: Group/Create

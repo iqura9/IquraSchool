@@ -4,8 +4,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (ViewBag.GroupName != null)
+{
+    <h1>Учні, які навчаються в @ViewBag.GroupName класі</h1>
+}
+else
+{
+    <h1>Учні</h1>
+}
 
-<h1>Учні</h1>
 
 <p>
     <a asp-action="Create">Додати</a>

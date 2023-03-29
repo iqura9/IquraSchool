@@ -24,7 +24,6 @@ namespace IquraSchool.Controllers
         {
             DateTime startDate = new DateTime(DateTime.Today.Year - 23, 9, 1);
             DateTime endDate = new DateTime(DateTime.Today.Year + 1, 8, 31);
-
             ViewBag.academicYears = new SelectList(_context.AcademicYears, "BeginEndYear", "BeginEndYear", academicYear);
 
             if (!string.IsNullOrEmpty(academicYear))

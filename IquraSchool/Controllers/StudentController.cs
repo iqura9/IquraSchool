@@ -25,7 +25,9 @@ namespace IquraSchool.Controllers
         {
             ViewBag.GroupId = id;
             ViewBag.GroupName = name;
-            var dbiquraSchoolContext = _context.Students.Include(s => s.Group).Where(s => s.Group.Id == id);
+            var dbiquraSchoolContext = id.HasValue 
+                ? _context.Students.Include(s => s.Group).Where(s => s.Group.Id == id) 
+                : _context.Students.Include(s => s.Group);
             return View(await dbiquraSchoolContext.ToListAsync());
         }
 

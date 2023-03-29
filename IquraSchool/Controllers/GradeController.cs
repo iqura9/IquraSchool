@@ -81,7 +81,8 @@ namespace IquraSchool.Controllers
         public IActionResult Create()
         {
             // #TODO replace 13 with real teacherId
-            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).Where(c => c.TeacherId == 13), "Id", "Subject.Name");
+            //ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).Where(c => c.TeacherId == 13), "Id", "Subject.Name");
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject), "Id", "Subject.Name");
             ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View();
         }

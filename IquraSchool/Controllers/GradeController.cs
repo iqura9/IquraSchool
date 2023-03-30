@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
-using Microsoft.Extensions.Configuration.UserSecrets;
-using DocumentFormat.OpenXml.Wordprocessing;
-using IquraSchool.Migrations;
+
 
 namespace IquraSchool.Controllers
 {
@@ -203,6 +200,11 @@ namespace IquraSchool.Controllers
         // GET: Grade/Progress/5
         public async Task<IActionResult> Progress(int? id, int? month, string? academicYear)
         {
+            if(month == null && academicYear == null)
+            {
+                return RedirectToAction("Progress", "Grade", new {id = id, month = DateTime.Now.Month, academicYear = "2022-2023"});
+            }
+
             if (id == null)
             {
                 return BadRequest("Student ID is required.");
@@ -242,8 +244,9 @@ namespace IquraSchool.Controllers
             }
 
             ViewBag.Months = new SelectList(months.Select((m, i) => new { Value = (i + 9) % 12 != 0 ? (i + 9) % 12 : 12, Text = m }), "Value", "Text", month);
+            ViewBag.Subjects = await _context.Subjects.Distinct().OrderBy(m => m.Name).Select(m => m.Name).ToListAsync();
 
-
+  
             return View("Progress", grades);
         }
         private bool GradeExists(int id)

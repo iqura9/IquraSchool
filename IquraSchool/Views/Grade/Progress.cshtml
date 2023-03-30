@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var subject in Model.Select(g => g.Course.Subject).Distinct())
+                   @* @foreach (var subject in Model.Select(g => g.Course.Subject).Distinct())
                     {
                         <tr>
                             <td>@subject.Name</td>
@@ -49,7 +49,33 @@
                                 </td>
                             }
                         </tr>
-                    }
+                    }*@
+
+                 @foreach (var subject in ViewBag.Subjects)
+                {
+                    <tr>
+                        <td class="align-middle">@subject</td>
+                        @for (int i = 1; i <= 31; i++)
+                        {
+                            var grade = Model.Where(g => g.Course.Subject.Name == subject && g.Date.Day == i)
+                                .Select(g => g.Grade1.HasValue ? g.Grade1.ToString() : absentList[g.Absent]);
+                            @if (grade.Count() > 1)
+                            {
+                                <td class="align-middle">
+                                @foreach (var g in grade)
+                                {
+                                    <div>@g</div>
+                                }
+                                </td>
+                            }else{
+                                <td class="align-middle">
+                                     @Html.DisplayFor(m => grade)
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+
                 </tbody>
             </table>
         </div>

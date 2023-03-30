@@ -80,3 +80,6 @@ button.accept-policy {
 .hidetable{
     display:none;
 }
+td{
+    text-align: center;
+}

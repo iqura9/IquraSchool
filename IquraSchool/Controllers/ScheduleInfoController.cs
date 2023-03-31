@@ -23,17 +23,35 @@ namespace IquraSchool.Controllers
         }
         List<string> daysOfWeek = new List<string> { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
         // GET: ScheduleInfo
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, int? teacherId, string? view)
         {
-
-            var dbiquraSchoolContext = _context.ScheduleInfos
+            ViewBag.DayOfTheWeeks = daysOfWeek;
+            IOrderedQueryable<ScheduleInfo> dbiquraSchoolContext = _context.ScheduleInfos
                 .Include(s => s.Course)
                 .Include(s => s.Course.Subject)
                 .Include(s => s.Course.Teacher)
                 .Include(s => s.Group)
                 .OrderBy(s => s.DayOfTheWeek)
                 .ThenBy(s => s.LessonNumber);
-            ViewBag.DayOfTheWeeks = daysOfWeek;
+
+            if (id != null)
+            {
+                dbiquraSchoolContext = dbiquraSchoolContext.Where(s => s.Group.Id == id)
+                    .OrderBy(s => s.DayOfTheWeek)
+                    .ThenBy(s => s.LessonNumber);
+            }
+            if (teacherId != null)
+            {
+                dbiquraSchoolContext = dbiquraSchoolContext.Where(s => s.Course.Teacher.Id == teacherId)
+                    .OrderBy(s => s.DayOfTheWeek)
+                    .ThenBy(s => s.LessonNumber);
+            }
+
+            if(view == "grid")
+            {
+                return View("Grid",await dbiquraSchoolContext.ToListAsync());
+            }
+
             return View(await dbiquraSchoolContext.ToListAsync());
         }
 

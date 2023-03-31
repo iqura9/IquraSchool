@@ -83,3 +83,6 @@ button.accept-policy {
 .table-responsive td {
     text-align: center;
 }
+.container:has(#container-fluid) {
+    max-width: 100%;
+}

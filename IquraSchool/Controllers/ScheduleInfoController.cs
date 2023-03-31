@@ -8,8 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
 
+
+
 namespace IquraSchool.Controllers
 {
+
     public class ScheduleInfoController : Controller
     {
         private readonly DbiquraSchoolContext _context;
@@ -18,11 +21,19 @@ namespace IquraSchool.Controllers
         {
             _context = context;
         }
-
+        List<string> daysOfWeek = new List<string> { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
         // GET: ScheduleInfo
         public async Task<IActionResult> Index()
         {
-            var dbiquraSchoolContext = _context.ScheduleInfos.Include(s => s.Course).Include(s => s.Group);
+
+            var dbiquraSchoolContext = _context.ScheduleInfos
+                .Include(s => s.Course)
+                .Include(s => s.Course.Subject)
+                .Include(s => s.Course.Teacher)
+                .Include(s => s.Group)
+                .OrderBy(s => s.DayOfTheWeek)
+                .ThenBy(s => s.LessonNumber);
+            ViewBag.DayOfTheWeeks = daysOfWeek;
             return View(await dbiquraSchoolContext.ToListAsync());
         }
 
@@ -49,8 +60,20 @@ namespace IquraSchool.Controllers
         // GET: ScheduleInfo/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
-            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id");
+            
+            //Excelent code
+            ViewData["CourseId"] = new SelectList(_context.Courses
+                .Include(c => c.Subject)
+                .Include(c => c.Teacher)
+                .OrderBy(c => c.Subject.Name)
+                .Select(c => new {
+                    Id = c.Id,
+                    Name = c.Subject.Name + " - " + c.Teacher.FullName
+                }), "Id", "Name");
+
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Name");
+            ViewData["DayOfTheWeek"] = new SelectList(daysOfWeek.Select((d,i) => new {Value = i, Text = d}), "Value", "Text");
+           
             return View();
         }
 

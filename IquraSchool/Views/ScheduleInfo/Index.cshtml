@@ -5,12 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var daysOfWeek = ViewBag.DayOfTheWeeks as List<string>;
+}
 <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="container-fluid">
     <thead>
         <tr>
             <th>
@@ -20,13 +23,13 @@
                 @Html.DisplayNameFor(model => model.DayOfTheWeek)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Link)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Course)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link)
             </th>
             <th></th>
         </tr>
@@ -38,17 +41,19 @@
                 @Html.DisplayFor(modelItem => item.LessonNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DayOfTheWeek)
+                    @daysOfWeek[item.DayOfTheWeek]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Link)
+                @Html.DisplayFor(modelItem => item.Course.Subject.Name)
+                -
+                @Html.DisplayFor(modelItem => item.Course.Teacher.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Course.Id)
+                @Html.DisplayFor(modelItem => item.Group.Name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Group.Id)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Link)
+                </td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |

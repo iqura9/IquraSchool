@@ -1,4 +1,4 @@
-@model IEnumerable<IquraSchool.Models.Grade>
+п»ї@model IEnumerable<IquraSchool.Models.Grade>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,15 +6,15 @@
 }
 
 
-<h1>Усі оцінки</h1>
+<h1>РЈСЃС– РѕС†С–РЅРєРё</h1>
 
 <p>
-    <a asp-action="Create">Додати</a>
+    <a asp-action="Create">Р”РѕРґР°С‚Рё</a>
 </p>
 
 @Html.DropDownList("academicYears",
     ViewBag.academicYears,
-    "Виберіть рік",
+    "Р’РёР±РµСЂС–С‚СЊ СЂС–Рє",
     new {@class = "form-control", onchange="academicYearChanged(this)", disabled = "disabled"}
 )
 
@@ -54,15 +54,15 @@
             <td>
                     @if (item.Absent == 0)
                     {
-                        <span>Ні</span>
+                        <span>РќС–</span>
                     }
                     else if (item.Absent == 1)
                     {
-                        <span>Н</span>
+                        <span>Рќ</span>
                     }
                     else
                     {
-                        <span>ПП</span>
+                        <span>РџРџ</span>
                     }
                 </td>
             <td>
@@ -75,9 +75,9 @@
                 @Html.DisplayFor(modelItem => item.Student.FullName)
             </td>
             <td>
-                   <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                   <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                   <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                   <a asp-action="Edit" asp-route-id="@item.Id">Р РµРґР°РіСѓРІР°С‚Рё</a> |
+                   <a asp-action="Details" asp-route-id="@item.Id">Р”РµС‚Р°Р»С–</a> |
+                   <a asp-action="Delete" asp-route-id="@item.Id">Р’РёРґР°Р»РёС‚Рё</a>
             </td>
         </tr>
 }

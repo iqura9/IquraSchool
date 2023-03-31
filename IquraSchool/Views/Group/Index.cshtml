@@ -1,14 +1,14 @@
-@model IEnumerable<IquraSchool.Models.Group>
+п»ї@model IEnumerable<IquraSchool.Models.Group>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Усі наявні класи</h1>
+<h1>РЈСЃС– РЅР°СЏРІРЅС– РєР»Р°СЃРё</h1>
 
 <p>
-    <a asp-action="Create">Додати клас</a>
+    <a asp-action="Create">Р”РѕРґР°С‚Рё РєР»Р°СЃ</a>
 </p>
 <table class="table">
     <thead>
@@ -32,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.HeadTeacher.FullName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Р РµРґР°РіСѓРІР°С‚Рё</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Р”РµС‚Р°Р»С–</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Р’РёРґР°Р»РёС‚Рё</a>
             </td>
         </tr>
 }

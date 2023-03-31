@@ -7,6 +7,7 @@
 
 @{
     var daysOfWeek = ViewBag.DayOfTheWeeks as List<string>;
+    var lookup = Model.ToDictionary(item => (item.DayOfTheWeek, item.LessonNumber), item => item);
 }
 <div id="container-fluid">
     <h2>Розклад</h2>
@@ -29,15 +30,11 @@
                     @for (int j = 0; j <= 4; j++)
                     {
                         <td>
-                            @foreach (var item in Model)
+                            @if (lookup.TryGetValue((j, i), out var item))
                             {
-                                if (item.DayOfTheWeek == j && item.LessonNumber == i)
-                                {
-                                    @item.Course.Subject.Name
-                                    @*@item.Classroom.Number
-                                    @item.Teacher.FullName*@
-                                    break;
-                                }
+                                 @item.Course.Subject.Name
+                                 @*@item.Classroom.Number
+                                 @item.Teacher.FullName*@
                             }
                         </td>
                     }

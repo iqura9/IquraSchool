@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
 html {
   font-size: 14px;
 }
@@ -85,4 +86,84 @@ button.accept-policy {
 }
 .container:has(#container-fluid) {
     max-width: 100%;
+}
+.simple-card {
+    background: rgba(14, 165, 233, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #0EA5E9 !important;
+    padding: 10px !important;
+    cursor: pointer;
+}
+.simple-card__subject-name {
+    color: #0369A1;
+    font-size: 16px;
+    font-family: 'Inter';
+    font-style: normal;
+    line-height: 16px;
+    font-weight: 600;
+}
+.simple-card__teacher-name {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+}
+.custom-btn {
+    background: #0EA5E9;
+    border-radius: 8px;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 10px;
+   
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 16px;
+    /* or 145% */
+
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+
+    margin-top: 10px;
+}
+.custom-btn {
+    opacity: 0;
+    position: absolute;
+}
+.custom-btn.animate {
+     display: block;
+     animation: fade-in 0.3s ease-in-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        position: absolute;
+    }
+
+    to {
+        opacity: 1;
+        position: relative;
+    }
+}
+.simple-card:hover .custom-btn {
+    position: relative;
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+.justify-content-end_custom{
+    display:flex;
+    justify-content: end;
 }

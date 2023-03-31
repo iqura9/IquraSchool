@@ -9,10 +9,24 @@
     var daysOfWeek = ViewBag.DayOfTheWeeks as List<string>;
     var lookup = Model.ToDictionary(item => (item.DayOfTheWeek, item.LessonNumber), item => item);
 }
+
+
+
+
 <div id="container-fluid">
-    <h2>Розклад</h2>
+    <h2>Розклад для @Model.Select(s => s.Group.Name).FirstOrDefault() класу</h2>
+    <div class="justify-content-end_custom">
+        <div class="btn-group mb-3 " role="group" aria-label="View Switcher">
+            @* if teacher then *@
+            @*<a href="@Url.Action("Index", new { teacherId = 2, view = "list" })" class="btn btn-primary mx-2">List View</a>
+            <a href="@Url.Action("Index", new { teacherId = 2, view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>*@
+            @*if student then*@
+            <a href="@Url.Action("Index", new { id = 1, view = "list" })" class="btn btn-primary mx-2">List View</a>
+            <a href="@Url.Action("Index", new { id = 1, view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>
+        </div>
+    </div>
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-dark ">
             <tr>
                 <th>№</th>
                 <th>Понеділок</th>
@@ -30,12 +44,29 @@
                     @for (int j = 0; j <= 4; j++)
                     {
                         <td>
-                            @if (lookup.TryGetValue((j, i), out var item))
-                            {
-                                 @item.Course.Subject.Name
-                                 @*@item.Classroom.Number
-                                 @item.Teacher.FullName*@
-                            }
+                                @if (lookup.TryGetValue((j, i), out var item))
+                                {
+                                    @if (!string.IsNullOrEmpty(item.Course.Subject.Name))
+                                    {
+                                    <div class="simple-card">
+                                        <div class="simple-card__subject-name">@item.Course.Subject.Name
+                                            @if (!string.IsNullOrEmpty(item.Link))
+                                            {
+                                                <img src="~/assets/video.svg" alt="video" />
+                                            }
+                                        </div>
+                                        <div class="simple-card__teacher-name">@item.Course.Teacher.FullName</div>
+                                        @if (!string.IsNullOrEmpty(item.Link))
+                                        {
+                                            <a class="btn custom-btn" href="@item.Link" target="_blank">
+                                                Увійти в клас
+                                            </a>
+                                        }
+                                    </div>
+                                    }
+                                    
+
+                                }
                         </td>
                     }
                 </tr>

@@ -1,4 +1,4 @@
-@model IEnumerable<IquraSchool.Models.ScheduleInfo>
+﻿@model IEnumerable<IquraSchool.Models.ScheduleInfo>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,12 +8,24 @@
 @{
     var daysOfWeek = ViewBag.DayOfTheWeeks as List<string>;
 }
-<h1>Index</h1>
+<h1>Розклад для @Model.Select(s => s.Group.Name).FirstOrDefault() класу</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Додати</a>
 </p>
+
 <table class="table" id="container-fluid">
+    
+    <div class="justify-content-end_custom">
+        <div class="btn-group mb-3 " role="group" aria-label="View Switcher">
+            @* if teacher then *@
+            @*<a href="@Url.Action("Index", new { teacherId = 2, view = "list" })" class="btn btn-primary mx-2">List View</a>
+            <a href="@Url.Action("Index", new { teacherId = 2, view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>*@
+            @*if student then*@
+            <a href="@Url.Action("Index", new { id = 1, view = "list" })" class="btn btn-primary mx-2">List View</a>
+            <a href="@Url.Action("Index", new { id = 1, view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>
+        </div>
+    </div>
     <thead>
         <tr>
             <th>
@@ -55,9 +67,9 @@
                     @Html.DisplayFor(modelItem => item.Link)
                 </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">����������</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">�����</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">��������</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
             </td>
         </tr>
 }

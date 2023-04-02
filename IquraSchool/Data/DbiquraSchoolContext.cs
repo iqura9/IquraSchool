@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IquraSchool.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace IquraSchool.Data;
@@ -9,11 +10,12 @@ public partial class DbiquraSchoolContext : DbContext
 {
     public DbiquraSchoolContext()
     {
+
     }
 
-    public DbiquraSchoolContext(DbContextOptions<DbiquraSchoolContext> options)
-        : base(options)
+    public DbiquraSchoolContext(DbContextOptions<DbiquraSchoolContext> options): base(options)
     {
+
     }
 
     public virtual DbSet<AcademicYear> AcademicYears { get; set; }

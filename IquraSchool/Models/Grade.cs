@@ -7,7 +7,7 @@ namespace IquraSchool.Models;
 public partial class Grade
 {
     public int Id { get; set; }
-
+    [Display(Name = "Учень")]
     public int StudentId { get; set; }
     [Display(Name = "Оцінка")]
     [Range(1, 12, ErrorMessage = "Оцінка повинна бути в діапазоні від 1 до 12.")]

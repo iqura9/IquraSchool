@@ -64,6 +64,7 @@ namespace IquraSchool.Controllers
 
             var grade = await _context.Grades
                 .Include(g => g.Course)
+                .Include(g => g.Course.Subject)
                 .Include(g => g.Student)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (grade == null)
@@ -79,7 +80,7 @@ namespace IquraSchool.Controllers
         {
             // #TODO replace 13 with real teacherId
             //ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).Where(c => c.TeacherId == 13), "Id", "Subject.Name");
-            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject), "Id", "Subject.Name");
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).OrderBy(s => s.Subject.Name), "Id", "Subject.Name");
             ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View();
         }
@@ -97,8 +98,8 @@ namespace IquraSchool.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject), "Id", "Subject.Name", grade.CourseId);
-            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName", grade.StudentId);
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).OrderBy(s => s.Subject.Name), "Id", "Subject.Name");
+            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View(grade);
         }
 
@@ -115,8 +116,8 @@ namespace IquraSchool.Controllers
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", grade.CourseId);
-            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Id", grade.StudentId);
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).OrderBy(s => s.Subject.Name), "Id", "Subject.Name");
+            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View(grade);
         }
 
@@ -152,8 +153,8 @@ namespace IquraSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", grade.CourseId);
-            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Id", grade.StudentId);
+            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).OrderBy(s => s.Subject.Name), "Id", "Subject.Name", grade.CourseId);
+            ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName", grade.StudentId);
             return View(grade);
         }
 

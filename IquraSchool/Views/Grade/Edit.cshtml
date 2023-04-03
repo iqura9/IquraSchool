@@ -1,4 +1,4 @@
-@model IquraSchool.Models.Grade
+﻿@model IquraSchool.Models.Grade
 
 @{
     ViewData["Title"] = "Edit";
@@ -36,7 +36,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Absent" class="control-label"></label>
-                <input asp-for="Absent" class="form-control" />
+                <select asp-for="Absent" class="form-control">
+                    <option value="0">Присутній</option>
+                    <option value="1">Не з'явився</option>
+                    <option value="2">Поважна причина</option>
+                </select>
                 <span asp-validation-for="Absent" class="text-danger"></span>
             </div>
             <div class="form-group">

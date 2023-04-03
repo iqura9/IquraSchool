@@ -9,9 +9,11 @@ public partial class Course
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "Please select a subject.")]
+    [Display(Name = "Предмет")]
     public int SubjectId { get; set; }
 
     [Required(ErrorMessage = "Please select a teacher.")]
+    [Display(Name = "Вчитель")]
     public int TeacherId { get; set; }
 
     public virtual ICollection<Grade> Grades { get; } = new List<Grade>();

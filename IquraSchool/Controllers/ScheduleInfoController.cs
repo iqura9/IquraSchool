@@ -65,6 +65,7 @@ namespace IquraSchool.Controllers
 
             var scheduleInfo = await _context.ScheduleInfos
                 .Include(s => s.Course)
+                .Include(s => s.Course.Subject)
                 .Include(s => s.Group)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (scheduleInfo == null)
@@ -108,8 +109,20 @@ namespace IquraSchool.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", scheduleInfo.CourseId);
-            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id", scheduleInfo.GroupId);
+
+            ViewData["CourseId"] = new SelectList(_context.Courses
+                .Include(c => c.Subject)
+                .Include(c => c.Teacher)
+                .OrderBy(c => c.Subject.Name)
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    Name = c.Subject.Name + " - " + c.Teacher.FullName
+                }), "Id", "Name", scheduleInfo.CourseId);
+
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Name", scheduleInfo.GroupId);
+            ViewData["DayOfTheWeek"] = new SelectList(daysOfWeek.Select((d, i) => new { Value = i, Text = d }), "Value", "Text", scheduleInfo.DayOfTheWeek);
+
             return View(scheduleInfo);
         }
 
@@ -126,8 +139,19 @@ namespace IquraSchool.Controllers
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", scheduleInfo.CourseId);
-            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id", scheduleInfo.GroupId);
+
+            ViewData["CourseId"] = new SelectList(_context.Courses
+                .Include(c => c.Subject)
+                .Include(c => c.Teacher)
+                .OrderBy(c => c.Subject.Name)
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    Name = c.Subject.Name + " - " + c.Teacher.FullName
+                }), "Id", "Name", scheduleInfo.CourseId);
+
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Name", scheduleInfo.GroupId);
+            ViewData["DayOfTheWeek"] = new SelectList(daysOfWeek.Select((d, i) => new { Value = i, Text = d }), "Value", "Text", scheduleInfo.DayOfTheWeek);
             return View(scheduleInfo);
         }
 
@@ -163,8 +187,18 @@ namespace IquraSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", scheduleInfo.CourseId);
-            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Id", scheduleInfo.GroupId);
+            ViewData["CourseId"] = new SelectList(_context.Courses
+                .Include(c => c.Subject)
+                .Include(c => c.Teacher)
+                .OrderBy(c => c.Subject.Name)
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    Name = c.Subject.Name + " - " + c.Teacher.FullName
+                }), "Id", "Name", scheduleInfo.CourseId);
+
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Name", scheduleInfo.GroupId);
+            ViewData["DayOfTheWeek"] = new SelectList(daysOfWeek.Select((d, i) => new { Value = i, Text = d }), "Value", "Text", scheduleInfo.DayOfTheWeek);
             return View(scheduleInfo);
         }
 

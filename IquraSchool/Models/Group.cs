@@ -7,7 +7,7 @@ namespace IquraSchool.Models;
 public partial class Group
 {
     public int Id { get; set; }
-    [Display(Name = "Назва")]
+    [Display(Name = "Клас")]
     public string Name { get; set; } = null!;
     [Display(Name = "Класний керівник")]
     public int? HeadTeacherId { get; set; }

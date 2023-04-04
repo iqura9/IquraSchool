@@ -13,7 +13,7 @@ public partial class Student
     public string Email { get; set; } = null!;
     [Display(Name = "Фото")]
     public string? Image { get; set; }
-
+    [Display(Name = "Клас")]
     public int GroupId { get; set; }
 
     public virtual ICollection<Grade> Grades { get; } = new List<Grade>();

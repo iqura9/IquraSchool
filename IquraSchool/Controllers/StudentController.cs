@@ -12,6 +12,7 @@ using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Identity;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Group = IquraSchool.Models.Group;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IquraSchool.Controllers
 {
@@ -19,11 +20,13 @@ namespace IquraSchool.Controllers
     {
         private readonly DbiquraSchoolContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public StudentController(DbiquraSchoolContext context, UserManager<User> userManager)
+        public StudentController(DbiquraSchoolContext context, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Student
@@ -34,6 +37,20 @@ namespace IquraSchool.Controllers
             var dbiquraSchoolContext = id.HasValue 
                 ? _context.Students.Include(s => s.Group).Where(s => s.Group.Id == id) 
                 : _context.Students.Include(s => s.Group);
+           
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var roles = await _userManager.GetRolesAsync(user);
+                
+                ViewBag.Roles = roles;
+            }
+            else
+            {
+                ViewBag.Roles = null;
+            }
+
             return View(await dbiquraSchoolContext.ToListAsync());
         }
 
@@ -178,6 +195,7 @@ namespace IquraSchool.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Import(IFormFile fileExcel)
         {
@@ -216,9 +234,20 @@ namespace IquraSchool.Controllers
                                     Student student = new Student();
                                     student.FullName = row.Cell(1).Value.ToString();
                                     student.Email = row.Cell(2).Value.ToString();
-                                    student.Image = row.Cell(3).Value.ToString();
+                                    student.Image = row.Cell(4).Value.ToString();
                                     student.Group = newGroup;
                                     _context.Students.Add(student);
+                                    _context.SaveChanges();
+                                    int studentYear = (int)row.Cell(3).Value;
+                                    
+                                    User user = new User { Email = student.Email, UserName = student.Email, Year = studentYear };
+                                    user.StudentId = student.Id;
+
+                                    var result = await _userManager.CreateAsync(user, "_Aa123456");
+                                    if (!result.Succeeded)
+                                    {
+                                        Console.WriteLine("Error");
+                                    }
                                 }
                                 catch(Exception e) { 
                                     

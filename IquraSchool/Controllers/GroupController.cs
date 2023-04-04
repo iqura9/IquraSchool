@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IquraSchool.Controllers
 {
@@ -19,7 +20,9 @@ namespace IquraSchool.Controllers
             _context = context;
         }
 
+
         // GET: Group
+        
         public async Task<IActionResult> Index()
         {
             var dbiquraSchoolContext = _context.Groups.Include(m => m.HeadTeacher);

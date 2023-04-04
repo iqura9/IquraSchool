@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace IquraSchool.Controllers
         {
             _context = context;
         }
-        List<string> daysOfWeek = new List<string> { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
+        List<string> daysOfWeek = new List<string> { "РџРѕРЅРµРґС–Р»РѕРє", "Р’С–РІС‚РѕСЂРѕРє", "РЎРµСЂРµРґР°", "Р§РµС‚РІРµСЂ", "Рџ'СЏС‚РЅРёС†СЏ" };
         // GET: ScheduleInfo
         public async Task<IActionResult> Index(int? id, int? teacherId, string? view)
         {
@@ -70,7 +70,7 @@ namespace IquraSchool.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (scheduleInfo == null)
             {
-                return NotFound();
+                return NotFound();  
             }
 
             return View(scheduleInfo);

@@ -7,26 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace IquraSchool.Controllers
 {
     public class CourseController : Controller
     {
         private readonly DbiquraSchoolContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public CourseController(DbiquraSchoolContext context)
+        public CourseController(DbiquraSchoolContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Course
         public async Task<IActionResult> Index(int? id, string? name)
         {
+            var user = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(user);
+            Console.WriteLine(user);
+            
+
+
             if (id == null)
             {
                 var dbiquraSchoolContextAll = _context.Courses.Include(c => c.Subject).Include(c => c.Teacher);
                 return View(await dbiquraSchoolContextAll.ToListAsync());
             }
+
 
             ViewBag.SubjectId = id;
             ViewBag.SubjectName = name;

@@ -1,5 +1,6 @@
 @model IEnumerable<IquraSchool.Models.Course>
 
+
 @{
     ViewData["Title"] = "Курси";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,6 +12,11 @@
     <h4>За предметом @ViewBag.SubjectName</h4>
 }
 
+<p>
+    @User.Identity.Name
+    @User.Identity.IsAuthenticated
+    
+</p>
 
 <p>
     <a asp-action="Create">Додати новий курс</a>

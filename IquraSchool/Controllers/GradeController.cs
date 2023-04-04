@@ -6,19 +6,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IquraSchool.Controllers
 {
     public class GradeController : Controller
     {
         private readonly DbiquraSchoolContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public GradeController(DbiquraSchoolContext context)
+        public GradeController(DbiquraSchoolContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
+        [Authorize(Roles = "student")]
         // GET: Grade
         public async Task<IActionResult> Index(int? id, string? academicYear)
         {
@@ -199,6 +202,8 @@ namespace IquraSchool.Controllers
 
 
         // GET: Grade/Progress/5
+       
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Progress(int? id, int? month, string? academicYear)
         {
             if(month == null && academicYear == null)

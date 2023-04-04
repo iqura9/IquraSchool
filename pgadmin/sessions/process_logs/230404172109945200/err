@@ -1,0 +1,348 @@
+230404172110205580,pg_dump: last built-in OID is 16383
+
+230404172110205670,pg_dump: reading extensions
+
+230404172110205714,pg_dump: identifying extension members
+
+230404172110205753,pg_dump: reading schemas
+
+230404172110213400,pg_dump: reading user-defined tables
+
+230404172110237511,pg_dump: reading user-defined functions
+
+230404172110242007,pg_dump: reading user-defined types
+
+230404172110251121,pg_dump: reading procedural languages
+
+230404172110252054,pg_dump: reading user-defined aggregate functions
+
+230404172110253095,pg_dump: reading user-defined operators
+
+230404172110255564,pg_dump: reading user-defined access methods
+
+230404172110255876,pg_dump: reading user-defined operator classes
+
+230404172110256561,pg_dump: reading user-defined operator families
+
+230404172110257133,pg_dump: reading user-defined text search parsers
+
+230404172110257394,pg_dump: reading user-defined text search templates
+
+230404172110257741,pg_dump: reading user-defined text search dictionaries
+
+230404172110258172,pg_dump: reading user-defined text search configurations
+
+230404172110258556,pg_dump: reading user-defined foreign-data wrappers
+
+230404172110259296,pg_dump: reading user-defined foreign servers
+
+230404172110261241,pg_dump: reading default privileges
+
+230404172110262505,pg_dump: reading user-defined collations
+
+230404172110265584,pg_dump: reading user-defined conversions
+
+230404172110266435,pg_dump: reading type casts
+
+230404172110267109,pg_dump: reading transforms
+
+230404172110267305,pg_dump: reading table inheritance information
+
+230404172110267586,pg_dump: reading event triggers
+
+230404172110268058,pg_dump: finding extension tables
+
+230404172110268697,pg_dump: finding inheritance relationships
+
+230404172110268753,pg_dump: reading column info for interesting tables
+
+230404172110268781,pg_dump: finding the columns and types of table "public.Course"
+
+230404172110269494,pg_dump: finding the columns and types of table "public.Grade"
+
+230404172110270112,pg_dump: finding the columns and types of table "public.Group"
+
+230404172110270640,pg_dump: finding the columns and types of table "public.Schedule_Info"
+
+230404172110271106,pg_dump: finding the columns and types of table "public.Student"
+
+230404172110271619,pg_dump: finding the columns and types of table "public.Subject"
+
+230404172110272188,pg_dump: finding the columns and types of table "public.Teacher"
+
+230404172110272681,pg_dump: finding the columns and types of table "public.__EFMigrationsHistory"
+
+230404172110273106,pg_dump: finding the columns and types of table "public.AcademicYear"
+
+230404172110273563,pg_dump: finding the columns and types of table "public.AspNetRoles"
+
+230404172110274153,pg_dump: finding the columns and types of table "public.AspNetUsers"
+
+230404172110274742,pg_dump: finding the columns and types of table "public.AspNetRoleClaims"
+
+230404172110275177,pg_dump: finding the columns and types of table "public.AspNetUserClaims"
+
+230404172110276112,pg_dump: finding the columns and types of table "public.AspNetUserLogins"
+
+230404172110277420,pg_dump: finding the columns and types of table "public.AspNetUserRoles"
+
+230404172110278350,pg_dump: finding the columns and types of table "public.AspNetUserTokens"
+
+230404172110279037,pg_dump: flagging inherited columns in subtables
+
+230404172110279107,pg_dump: reading indexes
+
+230404172110279138,pg_dump: reading indexes for table "public.Course"
+
+230404172110281394,pg_dump: reading indexes for table "public.Grade"
+
+230404172110282643,pg_dump: reading indexes for table "public.Group"
+
+230404172110283649,pg_dump: reading indexes for table "public.Schedule_Info"
+
+230404172110284755,pg_dump: reading indexes for table "public.Student"
+
+230404172110285761,pg_dump: reading indexes for table "public.Subject"
+
+230404172110286718,pg_dump: reading indexes for table "public.Teacher"
+
+230404172110287588,pg_dump: reading indexes for table "public.__EFMigrationsHistory"
+
+230404172110288618,pg_dump: reading indexes for table "public.AcademicYear"
+
+230404172110289483,pg_dump: reading indexes for table "public.AspNetRoles"
+
+230404172110290548,pg_dump: reading indexes for table "public.AspNetUsers"
+
+230404172110291838,pg_dump: reading indexes for table "public.AspNetRoleClaims"
+
+230404172110293058,pg_dump: reading indexes for table "public.AspNetUserClaims"
+
+230404172110294321,pg_dump: reading indexes for table "public.AspNetUserLogins"
+
+230404172110295551,pg_dump: reading indexes for table "public.AspNetUserRoles"
+
+230404172110296712,pg_dump: reading indexes for table "public.AspNetUserTokens"
+
+230404172110298504,pg_dump: flagging indexes in partitioned tables
+
+230404172110298585,pg_dump: reading extended statistics
+
+230404172110298939,pg_dump: reading constraints
+
+230404172110298995,pg_dump: reading foreign key constraints for table "public.Course"
+
+230404172110299238,pg_dump: reading foreign key constraints for table "public.Grade"
+
+230404172110299514,pg_dump: reading foreign key constraints for table "public.Group"
+
+230404172110299812,pg_dump: reading foreign key constraints for table "public.Schedule_Info"
+
+230404172110300076,pg_dump: reading foreign key constraints for table "public.Student"
+
+230404172110300340,pg_dump: reading foreign key constraints for table "public.Subject"
+
+230404172110300754,pg_dump: reading foreign key constraints for table "public.Teacher"
+
+230404172110300963,pg_dump: reading foreign key constraints for table "public.AspNetRoles"
+
+230404172110301261,pg_dump: reading foreign key constraints for table "public.AspNetUsers"
+
+230404172110305026,pg_dump: reading foreign key constraints for table "public.AspNetRoleClaims"
+
+230404172110305341,pg_dump: reading foreign key constraints for table "public.AspNetUserClaims"
+
+230404172110306054,pg_dump: reading foreign key constraints for table "public.AspNetUserLogins"
+
+230404172110306346,pg_dump: reading foreign key constraints for table "public.AspNetUserRoles"
+
+230404172110306620,pg_dump: reading foreign key constraints for table "public.AspNetUserTokens"
+
+230404172110306837,pg_dump: reading triggers
+
+230404172110306877,pg_dump: reading triggers for table "public.Course"
+
+230404172110307294,pg_dump: reading triggers for table "public.Grade"
+
+230404172110307631,pg_dump: reading triggers for table "public.Group"
+
+230404172110307940,pg_dump: reading triggers for table "public.Schedule_Info"
+
+230404172110308263,pg_dump: reading triggers for table "public.Student"
+
+230404172110308565,pg_dump: reading triggers for table "public.Subject"
+
+230404172110308886,pg_dump: reading triggers for table "public.Teacher"
+
+230404172110309169,pg_dump: reading triggers for table "public.AspNetRoles"
+
+230404172110309462,pg_dump: reading triggers for table "public.AspNetUsers"
+
+230404172110309995,pg_dump: reading triggers for table "public.AspNetRoleClaims"
+
+230404172110310431,pg_dump: reading triggers for table "public.AspNetUserClaims"
+
+230404172110310933,pg_dump: reading triggers for table "public.AspNetUserLogins"
+
+230404172110311292,pg_dump: reading triggers for table "public.AspNetUserRoles"
+
+230404172110311696,pg_dump: reading triggers for table "public.AspNetUserTokens"
+
+230404172110312060,pg_dump: reading rewrite rules
+
+230404172110312757,pg_dump: reading policies
+
+230404172110312808,pg_dump: reading row security enabled for table "public.Course"
+
+230404172110312825,pg_dump: reading policies for table "public.Course"
+
+230404172110313469,pg_dump: reading row security enabled for table "public.Course_Id_seq"
+
+230404172110313504,pg_dump: reading policies for table "public.Course_Id_seq"
+
+230404172110313863,pg_dump: reading row security enabled for table "public.Grade"
+
+230404172110313905,pg_dump: reading policies for table "public.Grade"
+
+230404172110314215,pg_dump: reading row security enabled for table "public.Grade_Id_seq"
+
+230404172110314250,pg_dump: reading policies for table "public.Grade_Id_seq"
+
+230404172110314572,pg_dump: reading row security enabled for table "public.Group"
+
+230404172110314610,pg_dump: reading policies for table "public.Group"
+
+230404172110314940,pg_dump: reading row security enabled for table "public.Group_Id_seq"
+
+230404172110314978,pg_dump: reading policies for table "public.Group_Id_seq"
+
+230404172110316531,pg_dump: reading row security enabled for table "public.Schedule_Info"
+
+230404172110316573,pg_dump: reading policies for table "public.Schedule_Info"
+
+230404172110316642,pg_dump: reading row security enabled for table "public.Schedule_Info_Id_seq"
+
+230404172110316661,pg_dump: reading policies for table "public.Schedule_Info_Id_seq"
+
+230404172110316790,pg_dump: reading row security enabled for table "public.Student"
+
+230404172110316807,pg_dump: reading policies for table "public.Student"
+
+230404172110316823,pg_dump: reading row security enabled for table "public.Student_Id_seq"
+
+230404172110316835,pg_dump: reading policies for table "public.Student_Id_seq"
+
+230404172110316935,pg_dump: reading row security enabled for table "public.Subject"
+
+230404172110316973,pg_dump: reading policies for table "public.Subject"
+
+230404172110317255,pg_dump: reading row security enabled for table "public.Subject_Id_seq"
+
+230404172110317287,pg_dump: reading policies for table "public.Subject_Id_seq"
+
+230404172110317597,pg_dump: reading row security enabled for table "public.Teacher"
+
+230404172110317628,pg_dump: reading policies for table "public.Teacher"
+
+230404172110317922,pg_dump: reading row security enabled for table "public.Teacher_Id_seq"
+
+230404172110317958,pg_dump: reading policies for table "public.Teacher_Id_seq"
+
+230404172110318269,pg_dump: reading row security enabled for table "public.__EFMigrationsHistory"
+
+230404172110318310,pg_dump: reading policies for table "public.__EFMigrationsHistory"
+
+230404172110318661,pg_dump: reading row security enabled for table "public.AcademicYear_Id_seq"
+
+230404172110318701,pg_dump: reading policies for table "public.AcademicYear_Id_seq"
+
+230404172110319010,pg_dump: reading row security enabled for table "public.AcademicYear"
+
+230404172110319050,pg_dump: reading policies for table "public.AcademicYear"
+
+230404172110319320,pg_dump: reading row security enabled for table "public.AspNetRoles"
+
+230404172110319355,pg_dump: reading policies for table "public.AspNetRoles"
+
+230404172110319732,pg_dump: reading row security enabled for table "public.AspNetUsers"
+
+230404172110319774,pg_dump: reading policies for table "public.AspNetUsers"
+
+230404172110320074,pg_dump: reading row security enabled for table "public.AspNetRoleClaims_Id_seq"
+
+230404172110320104,pg_dump: reading policies for table "public.AspNetRoleClaims_Id_seq"
+
+230404172110320344,pg_dump: reading row security enabled for table "public.AspNetRoleClaims"
+
+230404172110320366,pg_dump: reading policies for table "public.AspNetRoleClaims"
+
+230404172110320640,pg_dump: reading row security enabled for table "public.AspNetUserClaims_Id_seq"
+
+230404172110320674,pg_dump: reading policies for table "public.AspNetUserClaims_Id_seq"
+
+230404172110320955,pg_dump: reading row security enabled for table "public.AspNetUserClaims"
+
+230404172110320984,pg_dump: reading policies for table "public.AspNetUserClaims"
+
+230404172110321217,pg_dump: reading row security enabled for table "public.AspNetUserLogins"
+
+230404172110321244,pg_dump: reading policies for table "public.AspNetUserLogins"
+
+230404172110321558,pg_dump: reading row security enabled for table "public.AspNetUserRoles"
+
+230404172110321589,pg_dump: reading policies for table "public.AspNetUserRoles"
+
+230404172110321948,pg_dump: reading row security enabled for table "public.AspNetUserTokens"
+
+230404172110322007,pg_dump: reading policies for table "public.AspNetUserTokens"
+
+230404172110322274,pg_dump: reading publications
+
+230404172110322664,pg_dump: reading publication membership
+
+230404172110322909,pg_dump: reading subscriptions
+
+230404172110324978,pg_dump: reading large objects
+
+230404172110325717,pg_dump: reading dependency data
+
+230404172110334144,pg_dump: saving encoding = UTF8
+
+230404172110334208,pg_dump: saving standard_conforming_strings = on
+
+230404172110334465,pg_dump: saving search_path = 
+
+230404172110334503,pg_dump: saving database definition
+
+230404172110354551,pg_dump: dumping contents of table "public.AcademicYear"
+
+230404172110354923,pg_dump: dumping contents of table "public.AspNetRoleClaims"
+
+230404172110355182,pg_dump: dumping contents of table "public.AspNetRoles"
+
+230404172110355870,pg_dump: dumping contents of table "public.AspNetUserClaims"
+
+230404172110356669,pg_dump: dumping contents of table "public.AspNetUserLogins"
+
+230404172110356961,pg_dump: dumping contents of table "public.AspNetUserRoles"
+
+230404172110357209,pg_dump: dumping contents of table "public.AspNetUserTokens"
+
+230404172110357498,pg_dump: dumping contents of table "public.AspNetUsers"
+
+230404172110358252,pg_dump: dumping contents of table "public.Course"
+
+230404172110358572,pg_dump: dumping contents of table "public.Grade"
+
+230404172110358874,pg_dump: dumping contents of table "public.Group"
+
+230404172110359117,pg_dump: dumping contents of table "public.Schedule_Info"
+
+230404172110359636,pg_dump: dumping contents of table "public.Student"
+
+230404172110361341,pg_dump: dumping contents of table "public.Subject"
+
+230404172110362014,pg_dump: dumping contents of table "public.Teacher"
+
+230404172110362638,pg_dump: dumping contents of table "public.__EFMigrationsHistory"
+

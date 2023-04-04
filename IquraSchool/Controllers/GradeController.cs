@@ -21,7 +21,7 @@ namespace IquraSchool.Controllers
             _context = context;
             _userManager = userManager;
         }
-        [Authorize(Roles = "student")]
+        /*[Authorize(Roles = "student")]*/
         // GET: Grade
         public async Task<IActionResult> Index(int? id, string? academicYear)
         {
@@ -203,7 +203,7 @@ namespace IquraSchool.Controllers
 
         // GET: Grade/Progress/5
        
-        [ValidateAntiForgeryToken]
+        /*[ValidateAntiForgeryToken]*/
         public async Task<IActionResult> Progress(int? id, int? month, string? academicYear)
         {
             if(month == null && academicYear == null)

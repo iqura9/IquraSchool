@@ -8,16 +8,22 @@ using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Identity;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Group = IquraSchool.Models.Group;
 
 namespace IquraSchool.Controllers
 {
     public class StudentController : Controller
     {
         private readonly DbiquraSchoolContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public StudentController(DbiquraSchoolContext context)
+        public StudentController(DbiquraSchoolContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Student
@@ -156,8 +162,14 @@ namespace IquraSchool.Controllers
                 return Problem("Entity set 'DbiquraSchoolContext.Students'  is null.");
             }
             var student = await _context.Students.FindAsync(id);
+            
             if (student != null)
             {
+                var user = await _userManager.FindByEmailAsync(student.Email);
+                if (user != null)
+                {
+                    await _userManager.DeleteAsync(user);
+                }
                 _context.Students.Remove(student);
             }
             

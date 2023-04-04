@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IquraSchool", "IquraSchool.csproj", "{2817DB2B-2EA3-42E6-AAF5-ED1D68F1DD62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject2", "..\TestProject2\TestProject2.csproj", "{F7FD682B-45CA-467C-9C1A-A484ABB5E79A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2817DB2B-2EA3-42E6-AAF5-ED1D68F1DD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2817DB2B-2EA3-42E6-AAF5-ED1D68F1DD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2817DB2B-2EA3-42E6-AAF5-ED1D68F1DD62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7FD682B-45CA-467C-9C1A-A484ABB5E79A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7FD682B-45CA-467C-9C1A-A484ABB5E79A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7FD682B-45CA-467C-9C1A-A484ABB5E79A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7FD682B-45CA-467C-9C1A-A484ABB5E79A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

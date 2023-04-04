@@ -36,5 +36,7 @@ namespace IquraSchool.ViewModel
         //[NotMapped]
         [Display(Name = "Роль")]
         public RoleType Role { get; set; }
+        [Display(Name = "Клас")]
+        public int? GroupId { get; set; }
     }
 }

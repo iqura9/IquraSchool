@@ -2,23 +2,28 @@
 using Microsoft.AspNetCore.Mvc;
 using IquraSchool.ViewModel;
 using IquraSchool.Models;
+using IquraSchool.Data;
+using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IquraSchool.Controllers
 {
     public class AccountController : Controller
     {
-
+        private readonly DbiquraSchoolContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(DbiquraSchoolContext context, UserManager<User> userManager, SignInManager<User> signInManager)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
         [HttpGet]
         public IActionResult Register()
         {
+            ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Name");
             return View();
         }
         [HttpPost]
@@ -27,6 +32,31 @@ namespace IquraSchool.Controllers
             if (ModelState.IsValid)
             {
                 User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year };
+                // Add Student
+                if(model.Role == RoleType.Student && model.GroupId.HasValue)
+                {
+                    Student student = new Student
+                    {
+                        FullName = model.FullName,
+                        Email = model.Email,
+                        GroupId = model.GroupId.Value
+                    };
+                    _context.Add(student);
+                    _context.SaveChanges();
+                    user.StudentId = student.Id;
+                }
+                // Add teacher
+                if (model.Role == RoleType.Teacher && model.GroupId.HasValue)
+                {
+                    Teacher teacher = new Teacher
+                    {
+                        FullName = model.FullName,
+                        Email = model.Email,
+                    };
+                    _context.Add(teacher);
+                    _context.SaveChanges();
+                    user.TeacherId = teacher.Id;
+                }
                 // додаємо користувача
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

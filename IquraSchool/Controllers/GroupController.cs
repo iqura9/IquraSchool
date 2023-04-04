@@ -151,7 +151,8 @@ namespace IquraSchool.Controllers
             {
                 return Problem("Entity set 'DbiquraSchoolContext.Groups'  is null.");
             }
-            var group = await _context.Groups.FindAsync(id);
+            var group = await _context.Groups
+                .FindAsync(id);
             if (group != null)
             {
                 _context.Groups.Remove(group);

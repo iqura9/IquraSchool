@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace IquraSchool.Controllers
 {
     public class TeacherController : Controller
     {
         private readonly DbiquraSchoolContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public TeacherController(DbiquraSchoolContext context)
+        public TeacherController(DbiquraSchoolContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Teacher
@@ -148,6 +151,11 @@ namespace IquraSchool.Controllers
             var teacher = await _context.Teachers.FindAsync(id);
             if (teacher != null)
             {
+                var user = await _userManager.FindByEmailAsync(teacher.Email);
+                if(user != null)
+                {
+                    await _userManager.DeleteAsync(user);
+                }
                 _context.Teachers.Remove(teacher);
             }
             

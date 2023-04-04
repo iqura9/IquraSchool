@@ -1,0 +1,31 @@
+﻿@model IquraSchool.ViewModel.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Вхід в Школу</h2>
+
+<form method="post" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    
+    <div class="form-group">
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div class="form-check">
+        <label class="form-check-label" asp-for="RememberMe"></label>
+        <input class="form-check-input" type="checkbox" asp-for="RememberMe" />
+    </div>
+
+    <input type="submit" value="Увійти" class="btn btn-primary" />
+    
+</form>

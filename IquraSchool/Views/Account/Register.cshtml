@@ -1,0 +1,49 @@
+﻿@model IquraSchool.ViewModel.RegisterViewModel
+
+<h2>Реєстрація нового користувача</h2>
+
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Year"></label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PasswordConfirm"></label>
+        <input asp-for="PasswordConfirm" class="form-control" />
+        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Role"></label>
+        <select asp-for="Role" class="form-control">
+            <option value="">Select Role</option>
+            <option value="@RoleType.Student">@RoleType.Student</option>
+            <option value="@RoleType.Teacher">@RoleType.Teacher</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Реєстрація</button>
+</form>

@@ -41,17 +41,19 @@ namespace IquraSchool.Controllers
                 : _context.Students.Include(s => s.Group);
            
 
-            if (User.Identity.IsAuthenticated)
+            /*if (User.Identity.IsAuthenticated)
             {
                 var user = await _userManager.GetUserAsync(User);
-                var roles = await _userManager.GetRolesAsync(user);
+                //var roles = await _userManager.GetRolesAsync(user);
+
+                //ViewBag.Roles = roles;
                 
-                ViewBag.Roles = roles;
+                ViewBag.Roles = user.TeacherId;
             }
             else
             {
                 ViewBag.Roles = null;
-            }
+            }*/
 
             return View(await dbiquraSchoolContext.ToListAsync());
         }

@@ -8,6 +8,7 @@ using IquraSchool.Models;
 using IquraSchool.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace IquraSchool.Controllers
 {
@@ -21,12 +22,15 @@ namespace IquraSchool.Controllers
             _context = context;
             _userManager = userManager;
         }
-        /*[Authorize(Roles = "student")]*/
         // GET: Grade
         public async Task<IActionResult> Index(int? id, string? academicYear)
         {
             //Progress by userId
-            if (id != null) return RedirectToAction("Progress","Grade", new { id = id });
+            if (id != null)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                return RedirectToAction("Progress", "Grade", new { id = user.StudentId });
+            }
 
 
             //Grade
@@ -79,19 +83,40 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Grade/Create
-        public IActionResult Create()
+        [Authorize(Roles = "admin, teacher")]
+        public async Task<IActionResult> Create()
         {
-            // #TODO replace 13 with real teacherId
-            //ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).Where(c => c.TeacherId == 13), "Id", "Subject.Name");
-            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).OrderBy(s => s.Subject.Name), "Id", "Subject.Name");
+            if (User.IsInRole(Role.Teacher))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                ViewData["CourseId"] = new SelectList(_context.Courses
+                    .Include(c => c.Teacher)
+                    .Include(c => c.Subject)
+                    .OrderBy(c => c.Subject.Name)
+                    .Where(c => c.Teacher.Id == user.TeacherId)
+                    .Select(c => new {
+                        Id = c.Id,
+                        Name = c.Subject.Name + " - " + c.Teacher.FullName
+                    }), "Id", "Name");
+            }
+            else
+            {
+                ViewData["CourseId"] = new SelectList(_context.Courses
+                    .Include(c => c.Subject)
+                    .Include(c => c.Teacher)
+                    .OrderBy(c => c.Subject.Name)
+                    .Select(c => new {
+                        Id = c.Id,
+                        Name = c.Subject.Name + " - " + c.Teacher.FullName
+                    }), "Id", "Name");
+            }
             ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View();
         }
 
         // POST: Grade/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin, teacher")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,StudentId,Grade1,Date,CourseId,Absent")] Grade grade)
         {
@@ -101,12 +126,36 @@ namespace IquraSchool.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses.Include(c => c.Subject).OrderBy(s => s.Subject.Name), "Id", "Subject.Name");
+            if (User.IsInRole(Role.Teacher))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                ViewData["CourseId"] = new SelectList(_context.Courses
+                    .Include(c => c.Teacher)
+                    .Include(c => c.Subject)
+                    .OrderBy(c => c.Subject.Name)
+                    .Where(c => c.Teacher.Id == user.TeacherId)
+                    .Select(c => new {
+                        Id = c.Id,
+                        Name = c.Subject.Name + " - " + c.Teacher.FullName
+                    }), "Id", "Name");
+            }
+            else
+            {
+                ViewData["CourseId"] = new SelectList(_context.Courses
+                    .Include(c => c.Subject)
+                    .Include(c => c.Teacher)
+                    .OrderBy(c => c.Subject.Name)
+                    .Select(c => new {
+                        Id = c.Id,
+                        Name = c.Subject.Name + " - " + c.Teacher.FullName
+                    }), "Id", "Name");
+            }
             ViewData["StudentId"] = new SelectList(_context.Students, "Id", "FullName");
             return View(grade);
         }
 
         // GET: Grade/Edit/5
+        [Authorize(Roles = "admin, teacher")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Grades == null)
@@ -125,9 +174,8 @@ namespace IquraSchool.Controllers
         }
 
         // POST: Grade/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin, teacher")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,StudentId,Grade1,Date,CourseId,Absent")] Grade grade)
         {
@@ -162,6 +210,7 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Grade/Delete/5
+        [Authorize(Roles = "admin, teacher")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Grades == null)
@@ -183,6 +232,7 @@ namespace IquraSchool.Controllers
 
         // POST: Grade/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "admin, teacher")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -202,10 +252,11 @@ namespace IquraSchool.Controllers
 
 
         // GET: Grade/Progress/5
-       
-        /*[ValidateAntiForgeryToken]*/
+
+        [Authorize(Roles = "student")]
         public async Task<IActionResult> Progress(int? id, int? month, string? academicYear)
         {
+            
             if(month == null && academicYear == null)
             {
                 return RedirectToAction("Progress", "Grade", new {id = id, month = DateTime.Now.Month, academicYear = "2022-2023"});

@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
-
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using NuGet.DependencyResolver;
 
 namespace IquraSchool.Controllers
 {
@@ -16,14 +17,16 @@ namespace IquraSchool.Controllers
     public class ScheduleInfoController : Controller
     {
         private readonly DbiquraSchoolContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public ScheduleInfoController(DbiquraSchoolContext context)
+        public ScheduleInfoController(DbiquraSchoolContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         List<string> daysOfWeek = new List<string> { "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця" };
         // GET: ScheduleInfo
-        public async Task<IActionResult> Index(int? id, int? teacherId, string? view)
+        public async Task<IActionResult> Index(int? id,string? view)
         {
             ViewBag.DayOfTheWeeks = daysOfWeek;
             IOrderedQueryable<ScheduleInfo> dbiquraSchoolContext = _context.ScheduleInfos
@@ -33,21 +36,35 @@ namespace IquraSchool.Controllers
                 .Include(s => s.Group)
                 .OrderBy(s => s.DayOfTheWeek)
                 .ThenBy(s => s.LessonNumber);
-
-            if (id != null)
+            
+            if(id == null)
             {
-                dbiquraSchoolContext = dbiquraSchoolContext.Where(s => s.Group.Id == id)
+                var user = await _userManager.GetUserAsync(User);
+                if (user.TeacherId != null) id = user.TeacherId;
+                else if (user.StudentId != null) id = user.StudentId;
+            }
+            
+            
+            if (_context.Students.Any(s => s.Id == id))
+            {
+                var student = _context.Students.Include(s => s.Group).Where(s => s.Id == id).FirstOrDefault();
+                ViewBag.Name = student.FullName;
+                ViewBag.Group = student.Group.Name;
+                dbiquraSchoolContext = dbiquraSchoolContext
+                    .Where(s => s.Group.Students.Any(s => s.Id == id))
                     .OrderBy(s => s.DayOfTheWeek)
                     .ThenBy(s => s.LessonNumber);
             }
-            if (teacherId != null)
+            else if (_context.Teachers.Any(s => s.Id == id))
             {
-                dbiquraSchoolContext = dbiquraSchoolContext.Where(s => s.Course.Teacher.Id == teacherId)
+               var teacher = _context.Teachers.Where(s => s.Id == id).FirstOrDefault();
+               ViewBag.Name = teacher.FullName;
+                dbiquraSchoolContext = dbiquraSchoolContext.Where(s => s.Course.Teacher.Id == id)
                     .OrderBy(s => s.DayOfTheWeek)
                     .ThenBy(s => s.LessonNumber);
             }
 
-            if(view == "grid")
+            if (view == "grid")
             {
                 return View("Grid",await dbiquraSchoolContext.ToListAsync());
             }
@@ -77,6 +94,7 @@ namespace IquraSchool.Controllers
         }
 
         // GET: ScheduleInfo/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             
@@ -97,9 +115,8 @@ namespace IquraSchool.Controllers
         }
 
         // POST: ScheduleInfo/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,LessonNumber,DayOfTheWeek,GroupId,CourseId,Link")] ScheduleInfo scheduleInfo)
         {
@@ -156,9 +173,8 @@ namespace IquraSchool.Controllers
         }
 
         // POST: ScheduleInfo/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,LessonNumber,DayOfTheWeek,GroupId,CourseId,Link")] ScheduleInfo scheduleInfo)
         {
@@ -203,6 +219,7 @@ namespace IquraSchool.Controllers
         }
 
         // GET: ScheduleInfo/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.ScheduleInfos == null)

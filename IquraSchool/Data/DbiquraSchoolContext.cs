@@ -57,12 +57,12 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasOne(d => d.Subject).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.SubjectId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Course_Subject");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TeacherId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Course_Teacher");
         });
 
@@ -103,7 +103,7 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasOne(d => d.HeadTeacher).WithOne(p => p.Group)
                 .HasForeignKey<Group>(d => d.HeadTeacherId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Group_Teacher");
 
         });

@@ -47,6 +47,7 @@
                         <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
                     }
                     <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
+                    <a asp-controller="ScheduleInfo" asp-action="index" asp-route-id="@item.Id">Розклад</a>
                     @if (isAdmin)
                     {
                         <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>

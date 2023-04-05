@@ -13,6 +13,7 @@ public partial class Grade
     [Range(1, 12, ErrorMessage = "Оцінка повинна бути в діапазоні від 1 до 12.")]
     public int? Grade1 { get; set; }
     [Display(Name = "Дата")]
+    [DateLessThanOrEqualToToday(ErrorMessage = "Дата має бути меншою або дорівнювати сьогоднішній даті та часу")]
     public DateTime Date { get; set; }
     [Display(Name = "Предмет")]
     public int CourseId { get; set; }

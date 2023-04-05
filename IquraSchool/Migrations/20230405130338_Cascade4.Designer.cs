@@ -3,6 +3,7 @@ using System;
 using IquraSchool.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IquraSchool.Migrations
 {
     [DbContext(typeof(DbiquraSchoolContext))]
-    partial class DbiquraSchoolContextModelSnapshot : ModelSnapshot
+    [Migration("20230405130338_Cascade4")]
+    partial class Cascade4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,7 +280,7 @@ namespace IquraSchool.Migrations
                     b.HasOne("IquraSchool.Models.Teacher", "HeadTeacher")
                         .WithOne("Group")
                         .HasForeignKey("IquraSchool.Models.Group", "HeadTeacherId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_Group_Teacher");
 
                     b.Navigation("HeadTeacher");

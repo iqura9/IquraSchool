@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IquraSchool.Controllers
 {
@@ -66,10 +67,11 @@ namespace IquraSchool.Controllers
         }
 
         // GET: Course/Create
+        [Authorize(Roles ="admin")]
         public IActionResult Create()
         {
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name");
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "FullName");
+            ViewData["SubjectId"] = new SelectList(_context.Subjects.OrderBy(s => s.Name), "Id", "Name");
+            ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(s => s.FullName), "Id", "FullName");
             return View();
         }
 
@@ -77,6 +79,7 @@ namespace IquraSchool.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SubjectId,TeacherId")] Course course)
         {

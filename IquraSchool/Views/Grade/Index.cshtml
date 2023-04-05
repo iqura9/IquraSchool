@@ -4,11 +4,12 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool isAdmin = User.IsInRole(Role.Admin);
+    bool isTeacher = User.IsInRole(Role.Teacher);
 }
 
 
 <h1>Усі оцінки</h1>
-@if (isAdmin)
+@if (isAdmin || isTeacher)
 {
     <p>
         <a asp-action="Create">Додати</a>

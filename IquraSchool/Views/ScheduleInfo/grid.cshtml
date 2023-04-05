@@ -14,15 +14,15 @@
 
 
 <div id="container-fluid">
-    <h2>Розклад для @Model.Select(s => s.Group.Name).FirstOrDefault() класу</h2>
+    <h1>Розклад для <i>@ViewBag.Name</i> </h1>
+    @if (!string.IsNullOrEmpty(ViewBag.Group))
+    {
+        <h2>Клас <i>@ViewBag.Group</i> </h2>
+    }
     <div class="justify-content-end_custom">
         <div class="btn-group mb-3 " role="group" aria-label="View Switcher">
-            @* if teacher then *@
-            @*<a href="@Url.Action("Index", new { teacherId = 2, view = "list" })" class="btn btn-primary mx-2">List View</a>
-            <a href="@Url.Action("Index", new { teacherId = 2, view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>*@
-            @*if student then*@
-            <a href="@Url.Action("Index", new { id = 1, view = "list" })" class="btn btn-primary mx-2">List View</a>
-            <a href="@Url.Action("Index", new { id = 1, view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>
+            <a href="@Url.Action("Index", new { view = "list" })" class="btn btn-primary mx-2">List View</a>
+            <a href="@Url.Action("Index", new { view = "grid" })" class="btn btn-secondary mx-2">Grid View</a>
         </div>
     </div>
     <table class="table table-bordered">

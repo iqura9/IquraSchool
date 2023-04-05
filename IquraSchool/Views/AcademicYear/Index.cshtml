@@ -3,13 +3,17 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
 }
 
 <h1>Академічні навчальні роки</h1>
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create">Додати новий</a>
+    </p>
+}
 
-<p>
-    <a asp-action="Create">Додати новий</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -23,20 +27,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BeginYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndYear)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    @Html.DisplayFor(modelItem => item.BeginYear)
                 </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndYear)
+                </td>
+                <td>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    }
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

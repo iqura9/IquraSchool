@@ -3,19 +3,23 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
 }
 
 @{
     var daysOfWeek = ViewBag.DayOfTheWeeks as List<string>;
 }
 <h1>Розклад для @Model.Select(s => s.Group.Name).FirstOrDefault() класу</h1>
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create">Додати</a>
+    </p>
+}
 
-<p>
-    <a asp-action="Create">Додати</a>
-</p>
 
 <table class="table" id="container-fluid">
-    
+
     <div class="justify-content-end_custom">
         <div class="btn-group mb-3 " role="group" aria-label="View Switcher">
             @* if teacher then *@
@@ -47,31 +51,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LessonNumber)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LessonNumber)
+                </td>
+                <td>
                     @daysOfWeek[item.DayOfTheWeek]
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.Subject.Name)
-                -
-                @Html.DisplayFor(modelItem => item.Course.Teacher.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Group.Name)
-            </td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Subject.Name)
+                    -
+                    @Html.DisplayFor(modelItem => item.Course.Teacher.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Name)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Link)
                 </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
-            </td>
-        </tr>
-}
+                <td>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

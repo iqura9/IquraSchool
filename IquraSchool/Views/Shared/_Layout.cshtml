@@ -7,10 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="IquraSchool.styles.css" asp-append-version="true" rel="stylesheet"/>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap_lumen.min.css"/>
-@*    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-*@    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
+@{
+    bool isAdmin = User.IsInRole("admin");
+}
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -46,10 +47,17 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="Index">Предмети</a>
                     </li>
-                    
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="AcademicYear" asp-action="Index">Академічний рік</a>
                     </li>
+                    @if (isAdmin)
+                    {
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Ролі</a>
+                         </li>
+                    }
+                        
+
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>

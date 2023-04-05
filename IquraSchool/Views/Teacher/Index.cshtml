@@ -3,13 +3,17 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole("admin");
 }
 
 <h1>Вчителі</h1>
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create">Додати</a>
+    </p>
+}
 
-<p>
-    <a asp-action="Create">Додати</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -38,9 +42,15 @@
                 <img src="@Html.DisplayFor(modelItem => item.Image)" width="48px" alt="avatar"/>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    }
             </td>
         </tr>
 }

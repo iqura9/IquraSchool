@@ -2,11 +2,22 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DataType = System.ComponentModel.DataAnnotations.DataType;
+
+public static class Role
+{
+    public static readonly string Admin = "admin";
+    public static readonly string Student = "student";
+    public static readonly string Teacher = "teacher";
+}
+
 public enum RoleType
 {
+    Admin,
     Student,
     Teacher
 }
+
+
 
 namespace IquraSchool.ViewModel
 {

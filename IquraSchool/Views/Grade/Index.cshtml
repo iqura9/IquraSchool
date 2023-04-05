@@ -3,14 +3,18 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
 }
 
 
 <h1>Усі оцінки</h1>
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create">Додати</a>
+    </p>
+}
 
-<p>
-    <a asp-action="Create">Додати</a>
-</p>
 
 @Html.DropDownList("academicYears",
     ViewBag.academicYears,
@@ -43,15 +47,16 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Grade1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grade1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
                     @if (item.Absent == 0)
                     {
                         <span>Ні</span>
@@ -65,22 +70,28 @@
                         <span>ПП</span>
                     }
                 </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.Subject.Name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Subject.Name)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Course.Teacher.FullName)
                 </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.FullName)
-            </td>
-            <td>
-                   <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                   <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                   <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
-            </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.FullName)
+                </td>
+                <td>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
+                    @if(isAdmin)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -97,5 +108,5 @@
         $(document).ready(function () {
             $("#academicYears").removeAttr("disabled");
         });
-</script>
+    </script>
 }

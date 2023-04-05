@@ -15,13 +15,11 @@ else
     <h1>Учні</h1>
 }
 
-
-<p>
-    <a asp-action="Create">Додати</a>
-</p>
-@*@if (ViewBag.Roles != null && ViewBag.Roles.Contains("admin"))*@
 @if (isAdmin)
 {
+    <p>
+        <a asp-action="Create">Додати</a>
+    </p>
     <div>
         <h3>Оберіть excel-файл для завантаження</h3>
         @using (Html.BeginForm("Import", "Student", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
@@ -75,9 +73,15 @@ else
                 @Html.DisplayFor(modelItem => item.Group.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Деталі</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    }
             </td>
         </tr>
 }

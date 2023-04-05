@@ -208,23 +208,23 @@ namespace IquraSchool.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(fileExcel == null)
+                if (fileExcel == null)
                 {
                     return BadRequest("Файл не повинний бути пустим");
                 }
-                using(var stream = new FileStream(fileExcel.FileName, FileMode.Create))
+                using (var stream = new FileStream(fileExcel.FileName, FileMode.Create))
                 {
                     await fileExcel.CopyToAsync(stream);
-                    using(XLWorkbook workBook = new XLWorkbook(stream, XLEventTracking.Disabled))
+                    using (XLWorkbook workBook = new XLWorkbook(stream, XLEventTracking.Disabled))
                     {
                         //перегляд усіх листів (класи)
-                        foreach(IXLWorksheet worksheet in workBook.Worksheets)
+                        foreach (IXLWorksheet worksheet in workBook.Worksheets)
                         {
                             Group newGroup;
                             var c = (from g in _context.Groups
                                      where g.Name.Contains(worksheet.Name)
                                      select g).ToList();
-                            if(c.Count > 0)
+                            if (c.Count > 0)
                             {
                                 newGroup = c[0];
                             }
@@ -239,35 +239,34 @@ namespace IquraSchool.Controllers
                             {
                                 try
                                 {
-                                    Student student = new Student();
-                                    student.FullName = row.Cell(1).Value.ToString();
-                                    student.Email = row.Cell(2).Value.ToString();
-                                    student.Image = row.Cell(4).Value.ToString();
-                                    int studentYear = Convert.ToInt32(row.Cell(3).Value);
-                                    student.Group = newGroup;
-                                    _context.Students.Add(student);
-                                    await helper.AddUserStudent(student, studentYear);
-                                    //students.Add(student);
-                                    //years.Add(studentYear);
+                                    string email = row.Cell(2).Value.ToString();
+                                    var existingStudent = await _context.Students.FirstOrDefaultAsync(s => s.Email == email);
+                                    if (existingStudent == null)
+                                    {
+                                        Student student = new Student();
+                                        student.FullName = row.Cell(1).Value.ToString();
+                                        student.Email = email;
+                                        student.Image = row.Cell(4).Value.ToString();
+                                        int studentYear = Convert.ToInt32(row.Cell(3).Value);
+                                        student.Group = newGroup;
+                                        _context.Students.Add(student);
+                                        await helper.AddUserStudent(student, studentYear);
+                                    }
                                 }
-                                catch (Exception e) {
+                                catch (Exception e)
+                                {
                                     Console.WriteLine($"An error occurred while processing row {row.RowNumber()}: {e.Message}");
                                 }
                             }
                         }
                     }
                 }
-                await _context.SaveChangesAsync();
-                /*UserHelper helper = new UserHelper(_context, _userManager);
-                Console.WriteLine(students.Count);
-                for (int i = 0; i < students.Count; i++)
-                {
-                    Console.Write("FUCK");
-                    await helper.AddUserStudent(students[i], years[i]);
-                }*/
+                //await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
+
+
 
         private bool StudentExists(int id)
         {

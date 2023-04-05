@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using IquraSchool.Models;
 using IquraSchool.Data;
 using Microsoft.AspNetCore.Identity;
+using IquraSchool.Helpers;
 
 namespace IquraSchool.Controllers
 {
@@ -64,6 +65,15 @@ namespace IquraSchool.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(teacher);
+                try
+                {
+                    UserHelper helper = new UserHelper(_context, _userManager);
+                    await helper.AddUserTeacher(teacher);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

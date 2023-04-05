@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Group = IquraSchool.Models.Group;
 using Microsoft.AspNetCore.Authorization;
+using IquraSchool.Helpers;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace IquraSchool.Controllers
 {
@@ -81,8 +83,6 @@ namespace IquraSchool.Controllers
         }
 
         // POST: Student/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FullName,Email,Image,GroupId")] Student student)
@@ -90,7 +90,14 @@ namespace IquraSchool.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(student);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    UserHelper helper = new UserHelper(_context, _userManager);
+                    bool res = await helper.AddUserStudent(student);
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "Name", student.GroupId);
@@ -227,6 +234,7 @@ namespace IquraSchool.Controllers
                                 newGroup.Name = worksheet.Name;
                                 _context.Groups.Add(newGroup);
                             }
+                            UserHelper helper = new UserHelper(_context, _userManager);
                             foreach (IXLRow row in worksheet.RowsUsed().Skip(1))
                             {
                                 try
@@ -235,28 +243,28 @@ namespace IquraSchool.Controllers
                                     student.FullName = row.Cell(1).Value.ToString();
                                     student.Email = row.Cell(2).Value.ToString();
                                     student.Image = row.Cell(4).Value.ToString();
+                                    int studentYear = Convert.ToInt32(row.Cell(3).Value);
                                     student.Group = newGroup;
                                     _context.Students.Add(student);
-                                    _context.SaveChanges();
-                                    int studentYear = (int)row.Cell(3).Value;
-                                    
-                                    User user = new User { Email = student.Email, UserName = student.Email, Year = studentYear };
-                                    user.StudentId = student.Id;
-
-                                    var result = await _userManager.CreateAsync(user, "_Aa123456");
-                                    if (!result.Succeeded)
-                                    {
-                                        Console.WriteLine("Error");
-                                    }
+                                    await helper.AddUserStudent(student, studentYear);
+                                    //students.Add(student);
+                                    //years.Add(studentYear);
                                 }
-                                catch(Exception e) { 
-                                    
+                                catch (Exception e) {
+                                    Console.WriteLine($"An error occurred while processing row {row.RowNumber()}: {e.Message}");
                                 }
                             }
                         }
                     }
                 }
                 await _context.SaveChangesAsync();
+                /*UserHelper helper = new UserHelper(_context, _userManager);
+                Console.WriteLine(students.Count);
+                for (int i = 0; i < students.Count; i++)
+                {
+                    Console.Write("FUCK");
+                    await helper.AddUserStudent(students[i], years[i]);
+                }*/
             }
             return RedirectToAction(nameof(Index));
         }

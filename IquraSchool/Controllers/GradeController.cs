@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +9,11 @@ using IquraSchool.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Globalization;
+
 
 namespace IquraSchool.Controllers
 {
@@ -125,8 +130,9 @@ namespace IquraSchool.Controllers
                 _context.Add(grade);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
-            if (User.IsInRole(Role.Teacher))
+            else if (User.IsInRole(Role.Teacher))
             {
                 var user = await _userManager.GetUserAsync(User);
                 ViewData["CourseId"] = new SelectList(_context.Courses
@@ -306,6 +312,72 @@ namespace IquraSchool.Controllers
   
             return View("Progress", grades);
         }
+
+
+        public async Task<ActionResult> Export()
+        {
+            using (XLWorkbook workbook = new XLWorkbook(XLEventTracking.Disabled))
+            {
+                var grades = await _context.Grades
+                    .Include(g => g.Student)
+                    .Include(g => g.Course.Subject)
+                    .Include(g => g.Course.Teacher)
+                    .Where(g => g.Student.Id == 407)
+                    .OrderBy(g => g.Date)
+                    .ToListAsync();
+
+                // Group grades by month
+                var gradesByMonth = grades.GroupBy(g => g.Date.Month);
+
+                foreach (var monthGroup in gradesByMonth)
+                {
+                    var worksheet = workbook.Worksheets.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthGroup.Key));
+
+                    worksheet.Cell("A1").Value = "Учень";
+                    worksheet.Cell("B1").Value = "Предмет";
+                    worksheet.Cell("C1").Value = "Викладач";
+                    worksheet.Cell("D1").Value = "Оцінка";
+                    worksheet.Cell("E1").Value = "Присутність";
+                    worksheet.Cell("F1").Value = "Дата";
+                    
+
+                    worksheet.Row(1).Style.Font.Bold = true;
+                    worksheet.Column(1).Width = 40;
+                    worksheet.Column(2).Width = 21;
+                    worksheet.Column(3).Width = 40;
+                    worksheet.Column(4).Width = 10;
+                    worksheet.Column(5).Width = 10;
+                    worksheet.Column(6).Width = 15;
+
+                    var row = 2;
+                    List<string> absentList = new List<string>() { "", "Н", "ПП" };
+                    // Add grades for the current month
+                    foreach (var grade in monthGroup)
+                    {
+                        worksheet.Cell(row, 1).Value = grade.Student.FullName;
+                        worksheet.Cell(row, 2).Value = grade.Course.Subject.Name;
+                        worksheet.Cell(row, 3).Value = grade.Course.Teacher.FullName;
+                        worksheet.Cell(row, 4).Value = grade.Grade1;
+                        worksheet.Cell(row, 5).Value = absentList[grade.Absent];
+                        worksheet.Cell(row, 6).Value = grade.Date.ToString("yyyy-MM-dd");
+
+                        row++;
+                    }
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    stream.Flush();
+                    return new FileContentResult(stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    {
+                        FileDownloadName = $"grades_{DateTime.UtcNow.ToShortDateString()}.xlsx"
+                    };
+                }
+            }
+        }
+
         private bool GradeExists(int id)
         {
           return (_context.Grades?.Any(e => e.Id == id)).GetValueOrDefault();

@@ -36,8 +36,8 @@ public partial class DbiquraSchoolContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=postgres_iqura_container;Port=5432;Database=DBIquraSchool;Username=root;Password=root;Pooling=true;Include Error Detail=true;");
-    //=> optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=DBIquraSchool;Username=root;Password=root;Pooling=true;");
+        //=> optionsBuilder.UseNpgsql("Host=postgres_iqura_container;Port=5432;Database=DBIquraSchool;Username=root;Password=root;Pooling=true;Include Error Detail=true;");
+    => optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=DBIquraSchool;Username=root;Password=root;Pooling=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -57,12 +57,12 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasOne(d => d.Subject).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.SubjectId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Course_Subject");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TeacherId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Course_Teacher");
         });
 

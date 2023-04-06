@@ -12,6 +12,7 @@
 @{
     bool isAdmin = User.IsInRole(Role.Admin);
     bool isStudent = User.IsInRole(Role.Student);
+    bool isAuth = User.Identity.IsAuthenticated;
 }
 <body>
     <header>
@@ -23,14 +24,16 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    @if(isAuth){
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Курси</a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Grade" asp-action="Index">Оцінки</a>
                         </li>
-                        @if (isStudent)
+                        @if (isStudent && isAuth)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Grade" asp-action="Index" asp-route-id="1">Успішність</a>
@@ -63,6 +66,7 @@
 
 
                     </ul>
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>

@@ -57,12 +57,12 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasOne(d => d.Subject).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.SubjectId)
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Course_Subject");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.TeacherId)
-                .OnDelete(DeleteBehavior.SetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Course_Teacher");
         });
 
@@ -79,7 +79,7 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasOne(d => d.Course).WithMany(p => p.Grades)
                 .HasForeignKey(d => d.CourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Grade_Course");
 
             entity.HasOne(d => d.Student).WithMany(p => p.Grades)
@@ -118,7 +118,7 @@ public partial class DbiquraSchoolContext : DbContext
 
             entity.HasOne(d => d.Course).WithMany(p => p.ScheduleInfos)
                 .HasForeignKey(d => d.CourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Schedule_Info_Course");
 
             entity.HasOne(d => d.Group).WithMany(p => p.ScheduleInfos)

@@ -70,8 +70,11 @@
         </div>
     
 </div>
-<div class="container">
+<div class="container-fluid">
     <div id="chart1"></div>
+</div>
+<div class="container-fluid">
+    <div id="chart2"></div>
 </div>
 
 
@@ -123,20 +126,59 @@
 
         function drawChart() {
             var monthSelect = document.getElementById("Months");
+            var academicYearSelect = document.getElementById("academicYears");
             var selectedMonth = monthSelect.value;
+            var selectedAcademicYear = academicYearSelect.value;
 
-            $.get('/api/Chart/JsonData?month=' + selectedMonth, function (JsonData) {
+            $.get(`/api/Chart/JsonData?month=${selectedMonth}&academicYear=${selectedAcademicYear}`, function (JsonData) {
                 data = google.visualization.arrayToDataTable(JsonData, false);
                 var option = {
                     title: "Співвідношення предмет та його середня оцінка",
                     width: '100%',
-                    height: 800
+                    height: 800,
+                    vAxis: {
+                        minValue: 1,
+                        maxValue: 12,
+                        baseline: 1
+                    }
                 };
-                chart = new google.visualization.PieChart(document.getElementById('chart1'));
+                chart = new google.visualization.ColumnChart(document.getElementById('chart1'));
                 chart.draw(data, option);
             })
         }
 
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart2);
+
+        function drawChart2() {
+            var monthSelect = document.getElementById("Months");
+            var academicYearSelect = document.getElementById("academicYears");
+            var selectedMonth = monthSelect.value;
+            var selectedAcademicYear = academicYearSelect.value;
+
+            $.get(`/api/Chart/JsonData1?month=${selectedMonth}&academicYear=${selectedAcademicYear}`, function (JsonData) {
+               
+               
+                data = google.visualization.arrayToDataTable(JsonData, false);
+                var option = {             
+                    title: "Співвідношення предмет та його середня оцінка",
+                    width: '100%',
+                    height: 800,
+                    vAxes: {
+                        0: {title: 'Середня оцінка за цей рік'},
+                        1: {title: 'Середня оцінка за минулий рік'}
+                    },
+                    series: {
+                        0: {targetAxisIndex: 0},
+                        1: {targetAxisIndex: 1}
+                    }
+                };
+
+                chart = new google.visualization.ColumnChart(document.getElementById('chart2'));
+                chart.draw(data, option);
+            })
+        }
        
 
     </script>

@@ -132,7 +132,8 @@ namespace IquraSchool.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            else if (User.IsInRole(Role.Teacher))
+            
+            if (User.IsInRole(Role.Teacher))
             {
                 var user = await _userManager.GetUserAsync(User);
                 ViewData["CourseId"] = new SelectList(_context.Courses
@@ -145,7 +146,8 @@ namespace IquraSchool.Controllers
                         Name = c.Subject.Name + " - " + c.Teacher.FullName
                     }), "Id", "Name");
             }
-            else
+
+            if (User.IsInRole(Role.Admin))
             {
                 ViewData["CourseId"] = new SelectList(_context.Courses
                     .Include(c => c.Subject)

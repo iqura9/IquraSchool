@@ -12,6 +12,7 @@
 		
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.97.0" />
+    <PackageReference Include="EntityFrameworkCore.RawSQLExtensions" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

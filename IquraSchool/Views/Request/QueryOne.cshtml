@@ -1,0 +1,57 @@
+﻿@model IEnumerable<IquraSchool.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
+}
+
+<h1>Прості запити</h1>
+<hr />
+<h2>Запит 1 </h2>
+<p>Отримати список учнів, що належать до певного класу <strong>P</strong></p>
+
+@Html.DropDownList("Groups",
+        ViewBag.Groups,
+        "Виберіть клас",
+    new { @class = "form-control mb-3", onchange = "onDropdownChange()" }
+    )
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @item.Group.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="home" asp-action="Index" class="btn btn-primary">На головну</a>
+<a asp-action="Index" class="btn btn-primary">Назад до запитів</a>
+
+@section Scripts {
+    <script>
+        function onDropdownChange() {
+            var groupId = document.getElementById("Groups").value;
+            window.location.href = "/Request/QueryOne?queryOneId=" + groupId;
+        }
+    </script>
+}

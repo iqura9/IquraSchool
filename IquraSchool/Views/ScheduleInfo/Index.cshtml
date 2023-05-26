@@ -26,7 +26,6 @@
 
 
 <table class="table" id="container-fluid">
-
     <div class="justify-content-end_custom">
         <div class="btn-group mb-3 " role="group" aria-label="View Switcher">
             <a href="@Url.Action("Index", new { view = "list" })" class="btn btn-primary mx-2">List View</a>
@@ -89,3 +88,7 @@
         }
     </tbody>
 </table>
+
+<a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary">На головну</a>
+<a asp-controller="Request" asp-action="Index" class="btn btn-primary">Назад до запитів</a>
+<a asp-controller="Request" asp-action="QueryFive" class="btn btn-primary">Назад до запиту 5</a>

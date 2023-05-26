@@ -20,3 +20,12 @@ public partial class Student
     [Display(Name = "Клас")]
     public virtual Group Group { get; set; } = null!;
 }
+public partial class StudentGradeViewModel
+{
+    public int Id { get; set; }
+    public string Email { get; set; }
+    public string FullName { get; set; }
+    public int GroupId { get; set; }
+    public string Image { get; set; }
+    public Decimal AverageGrade { get; set; }
+}

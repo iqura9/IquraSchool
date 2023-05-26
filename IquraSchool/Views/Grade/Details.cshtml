@@ -6,10 +6,10 @@
     List<string> absentList = new List<string>() { "Присутній", "Не з'явився", "Поважна причина" };
 }
 
-<h1>Details</h1>
+<h1>Деталі</h1>
 
 <div>
-    <h4>Grade</h4>
+    <h4>Оцінка</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -45,6 +45,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
+    <a asp-action="Index">Назад</a>
 </div>

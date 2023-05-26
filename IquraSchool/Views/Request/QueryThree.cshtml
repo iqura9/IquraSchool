@@ -1,0 +1,76 @@
+﻿@model IEnumerable<IquraSchool.Controllers.RequestController.Schedule_InfoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
+}
+
+<h1>Прості запити</h1>
+<hr />
+<h2>Запит 3 </h2>
+<p>Отримати розклад уроків для певного класу <strong>C</strong> на певний день тижня <strong>D</strong></p>
+
+@Html.DropDownList("Groups",
+        ViewBag.Groups,
+        "Виберіть клас",
+    new { @class = "form-control mb-3", onchange = "onDropdownChange()" }
+    )
+@Html.DropDownList("Daylist",
+        ViewBag.Daylist,
+        "Виберіть день",
+    new { @class = "form-control mb-3", onchange = "onDropdownChange()" }
+    )
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SubjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LessonNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.SubjectName
+                </td>
+                <td>
+                    @item.TeacherName
+                </td>
+                <td>
+                    @item.LessonNumber
+                </td>
+                <td>
+                    @item.GroupName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="home" asp-action="Index" class="btn btn-primary">На головну</a>
+<a asp-action="Index" class="btn btn-primary">Назад до запитів</a>
+
+@section Scripts {
+    <script>
+        function onDropdownChange() {
+            var groupId = document.getElementById("Groups").value;
+            var day = document.getElementById("Daylist").value;
+            var url = "/Request/QueryThree?groupId=" + groupId + "&dayListId=" + day;
+            window.location.href = url;
+        }
+    </script>
+}

@@ -26,9 +26,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @if(isAuth){
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Курси</a>
-                        </li>
+                        </li> *@
                         
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Grade" asp-action="Index">Оцінки</a>
@@ -54,17 +54,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Subject" asp-action="Index">Предмети</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AcademicYear" asp-action="Index">Академічний рік</a>
-                        </li>
                         @if (isAdmin)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Ролі</a>
                             </li>
                         }
-
-
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="Index">Запити</a>
+                        </li>
+                         <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="Index">Довідка</a>
+                        </li>
                     </ul>
                     }
                     <partial name="_LoginPartial" />

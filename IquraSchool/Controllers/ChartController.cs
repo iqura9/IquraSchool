@@ -42,7 +42,7 @@ namespace IquraSchool.Controllers
                 .ToList();
 
             // Add the header row
-            gradesByCourse.Insert(0, new object[] { "Course", "Average Grade" });
+            gradesByCourse.Insert(0, new object[] { "Course", "Середня оцінка" });
 
             return new JsonResult(gradesByCourse);
         }

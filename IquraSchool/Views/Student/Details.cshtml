@@ -1,14 +1,14 @@
-@model IquraSchool.Models.Student
+п»ї@model IquraSchool.Models.Student
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Детальна інформація</h1>
+<h1>Р”РµС‚Р°Р»СЊРЅР° С–РЅС„РѕСЂРјР°С†С–СЏ</h1>
 
 <div>
-    <h4>Учня</h4>
+    <h4>РЈС‡РЅСЏ</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -29,7 +29,7 @@
         <dd class = "col-sm-10">
             @if (!string.IsNullOrEmpty(Model.Image))
             {
-                <img src="@Html.DisplayFor(model => model.Image)" alt="аватар" width="60px">
+                <img src="@Html.DisplayFor(model => model.Image)" alt="Р°РІР°С‚Р°СЂ" width="60px">
             }
         </dd>
         <dt class = "col-sm-2">
@@ -41,6 +41,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
-    <a asp-action="Index">Назад</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Р РµРґР°РіСѓРІР°С‚Рё</a> |
+    <a asp-action="Index">РќР°Р·Р°Рґ</a>
 </div>

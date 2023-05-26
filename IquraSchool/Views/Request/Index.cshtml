@@ -1,0 +1,53 @@
+﻿@model IEnumerable<IquraSchool.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
+}
+
+<h1>Прості запити</h1>
+<hr />
+
+<h2>Запит 1 </h2>
+<h4>Отримати список учнів, що належать до певного класу <strong>P</strong></h4>
+<a asp-action="QueryOne" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h2>Запит 2 </h2>
+<h4>Отримати середній бал учня за певний предмет <strong>P</strong></h4>
+<a asp-action="QueryTwo" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h2>Запит 3 </h2>
+<h4>Отримати розклад уроків для певного класу <strong>C</strong> на певний день тижня <strong>D</strong></h4>
+<a asp-action="QueryThree" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h2>Запит 4 </h2>
+<h4>Отримати учнів у яких середній бал більший <strong>G</strong></h4>
+<a asp-action="QueryFour" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h2>Запит 5 </h2>
+<h4>Отримати розклад вчителя за його П.І.Б <strong>E</strong></h4>
+<a asp-action="QueryFive" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h1>Множинні  запити</h1>
+<hr />
+
+
+<h2>Запит 1 </h2>
+<h4>Знайти всіх вчителів та їй предмети, які принаймні  викладають всі предмети, що і введений викладач</h4>
+<a asp-action="QueryOneHard" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h2>Запит 2 </h2>
+<h4>Знайти всіх вчителів та їй предмети, які викладають ті і тільки ті предмети, що і введений викладач</h4>
+<a asp-action="QueryTwoHard" class="btn btn-primary">Тестувати</a>
+
+<h1> </h1>
+<h2>Запит 3 </h2>
+<h4>Знайти всіх вчителів та їй предмети, які викладають всі предмети, що і введений викладач і обов'язково ще якісь</h4>
+<a asp-action="QueryThreeHard" class="btn btn-primary">Тестувати</a>

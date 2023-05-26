@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isAdmin = User.IsInRole(Role.Admin);
+}
+
+<h1>Прості запити</h1>
+<hr />
+<h2>Запит 5 </h2>
+<p>Отримати розклад вчителя за його електронною адресою <strong>E</strong></p>
+
+@Html.DropDownList("Teacher",
+        ViewBag.Teacher,
+        "Виберіть вчителя",
+    new { @class = "form-control mb-3", onchange = "onDropdownChange()" }
+    )
+
+<a asp-controller="home" asp-action="Index" class="btn btn-primary">На головну</a>
+<a asp-action="Index" class="btn btn-primary">Назад до запитів</a>
+
+@section Scripts {
+    <script>
+        function onDropdownChange() {
+            var TeacherId = document.getElementById("Teacher").value;
+            window.location.href = "../ScheduleInfo/index/" + TeacherId;
+        }
+    </script>
+}
